@@ -1,0 +1,74 @@
+{
+  "app": {
+    "title": "نظام مدارس للتقييم",
+    "subtitle": "وزارة التعليم - وكالة التعليم الأهلي"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "selectRole": "اختر دورك",
+    "logout": "تسجيل الخروج",
+    "switchRole": "تبديل الدور"
+  },
+  "roles": {
+    "school_admin": "مدير المدرسة",
+    "ops_reviewer": "مراجع العمليات",
+    "committee_member": "عضو اللجنة",
+    "appeals_officer": "موظف الاستئنافات",
+    "national_viewer": "لوحة المعلومات الوطنية",
+    "public": "البوابة العامة"
+  },
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "submit": "إرسال",
+    "approve": "قبول",
+    "reject": "رفض",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "view": "عرض",
+    "download": "تحميل",
+    "upload": "رفع",
+    "search": "بحث",
+    "filter": "تصفية",
+    "clear": "مسح",
+    "all": "الكل",
+    "yes": "نعم",
+    "no": "لا",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح"
+  },
+  "nav": {
+    "dashboard": "لوحة المعلومات",
+    "evaluations": "التقييمات",
+    "schools": "المدارس",
+    "reports": "التقارير",
+    "settings": "الإعدادات"
+  },
+  "evaluation": {
+    "status": {
+      "draft": "مسودة",
+      "in_progress": "قيد التنفيذ",
+      "submitted": "مُرسل",
+      "under_review": "قيد المراجعة",
+      "returned_for_correction": "إعادة للتصحيح",
+      "pending_committee": "في انتظار اللجنة",
+      "approved": "موافق عليه",
+      "published": "منشور",
+      "closed": "مغلق"
+    },
+    "version": "النسخة",
+    "deadline": "الموعد النهائي",
+    "completion": "الإنجاز",
+    "pendingItems": "العناصر المعلقة",
+    "submitForReview": "إرسال للمراجعة",
+    "saveDraft": "حفظ المسودة"
+  },
+  "domains": {
+    "compliance": "الامتثال",
+    "excellence": "التميز المؤسسي",
+    "satisfaction": "رضا المستفيدين"
+  }
+}

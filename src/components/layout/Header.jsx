@@ -1,8 +1,12 @@
 import React from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Globe, User, LogOut } from 'lucide-react';
 
-// Simplified Header component (will be enhanced with contexts in Document 03)
-const Header = ({ user = null, onLanguageToggle = null, onLogout = null, language = 'en' }) => {
+const Header = () => {
+  const { user, logout } = useAuth();
+  const { language, toggleLanguage, t } = useLanguage();
+
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
       <div className="px-6 py-4">
@@ -14,10 +18,10 @@ const Header = ({ user = null, onLanguageToggle = null, onLogout = null, languag
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-900">
-                {language === 'ar' ? 'نظام تقييم المدارس' : 'Madares Score System'}
+                {t('app.title')}
               </h1>
               <p className="text-xs text-gray-500">
-                {language === 'ar' ? 'وزارة التعليم' : 'Ministry of Education'}
+                {t('app.subtitle')}
               </p>
             </div>
           </div>
@@ -25,22 +29,24 @@ const Header = ({ user = null, onLanguageToggle = null, onLogout = null, languag
           {/* Right side actions */}
           <div className="flex items-center gap-4">
             {/* Language toggle */}
-            {onLanguageToggle && (
-              <button
-                onClick={onLanguageToggle}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <Globe className="w-4 h-4" />
-                <span>{language === 'en' ? 'العربية' : 'English'}</span>
-              </button>
-            )}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{language === 'en' ? 'العربية' : 'English'}</span>
+            </button>
 
             {/* User menu */}
             {user && (
               <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
                 <div className="text-right">
-                  <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                  <p className="text-xs text-gray-500">{user.role}</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {language === 'ar' ? user.name_ar : user.name}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {t(`roles.${user.role}`)}
+                  </p>
                 </div>
                 <div className="relative">
                   <button className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
@@ -49,15 +55,13 @@ const Header = ({ user = null, onLanguageToggle = null, onLogout = null, languag
                 </div>
 
                 {/* Logout (for demo, allows role switching) */}
-                {onLogout && (
-                  <button
-                    onClick={onLogout}
-                    className="text-gray-500 hover:text-danger-600 transition-colors"
-                    title="Switch Role"
-                  >
-                    <LogOut className="w-5 h-5" />
-                  </button>
-                )}
+                <button
+                  onClick={logout}
+                  className="text-gray-500 hover:text-danger-600 transition-colors"
+                  title={t('auth.switchRole')}
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
               </div>
             )}
           </div>
