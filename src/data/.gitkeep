@@ -1,0 +1,6 @@
+# Mock JSON data files will be created here
+# - users.json
+# - schools.json
+# - evaluations.json
+# - indicators.json
+# - mockData.js (helper functions)
