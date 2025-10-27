@@ -23,7 +23,7 @@ const Card = ({
   return (
     <div className={`bg-white rounded-lg ${borderClass} ${shadowClass} ${className}`}>
       {(title || actions) && (
-        <div className={`flex items-center justify-between border-b border-gray-200 ${padding === 'none' ? 'p-6 pb-4' : 'pb-4 mb-4'}`}>
+        <div className={`flex items-center justify-between border-b border-gray-200 px-6 pt-6 pb-4`}>
           <div>
             {title && <h3 className="text-lg font-semibold text-gray-900">{title}</h3>}
             {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
