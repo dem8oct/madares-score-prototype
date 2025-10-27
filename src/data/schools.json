@@ -1,0 +1,117 @@
+{
+  "schools": [
+    {
+      "id": "SCH-2025-001",
+      "name": "Riyadh International School",
+      "name_ar": "مدرسة الرياض العالمية",
+      "region": "Riyadh",
+      "city": "Riyadh City",
+      "level": "Secondary",
+      "gender_model": "Co-ed",
+      "license_number": "LIC-2024-001234",
+      "license_expiry": "2026-12-31",
+      "total_students": 450,
+      "total_teachers": 40,
+      "contact_email": "info@riyadh-intl.edu.sa",
+      "contact_phone": "+966 11 234 5678",
+      "current_evaluation_id": "REQ-2025-001",
+      "published_score": {
+        "compliance": "Pass",
+        "excellence_score": 83.7,
+        "excellence_grade": "B",
+        "satisfaction_score": 89.5,
+        "satisfaction_grade": "B+",
+        "evaluation_date": "2025-09-15"
+      }
+    },
+    {
+      "id": "SCH-2025-002",
+      "name": "Al-Noor Academy",
+      "name_ar": "أكاديمية النور",
+      "region": "Riyadh",
+      "city": "Riyadh City",
+      "level": "Primary",
+      "gender_model": "Boys",
+      "license_number": "LIC-2024-001235",
+      "license_expiry": "2026-06-30",
+      "total_students": 320,
+      "total_teachers": 28,
+      "contact_email": "info@alnoor.edu.sa",
+      "contact_phone": "+966 11 345 6789",
+      "current_evaluation_id": "REQ-2025-002",
+      "published_score": null
+    },
+    {
+      "id": "SCH-2025-003",
+      "name": "Al-Faisal Girls School",
+      "name_ar": "مدرسة الفيصل للبنات",
+      "region": "Jeddah",
+      "city": "Jeddah",
+      "level": "Intermediate",
+      "gender_model": "Girls",
+      "license_number": "LIC-2024-001236",
+      "license_expiry": "2027-03-31",
+      "total_students": 280,
+      "total_teachers": 24,
+      "contact_email": "info@alfaisal-girls.edu.sa",
+      "contact_phone": "+966 12 456 7890",
+      "current_evaluation_id": null,
+      "published_score": {
+        "compliance": "Pass",
+        "excellence_score": 91.2,
+        "excellence_grade": "A",
+        "satisfaction_score": 88.3,
+        "satisfaction_grade": "B+",
+        "evaluation_date": "2025-08-20"
+      }
+    },
+    {
+      "id": "SCH-2025-004",
+      "name": "Al-Majd Academy",
+      "name_ar": "أكاديمية المجد",
+      "region": "Jeddah",
+      "city": "Jeddah",
+      "level": "Secondary",
+      "gender_model": "Boys",
+      "license_number": "LIC-2024-001237",
+      "license_expiry": "2026-09-30",
+      "total_students": 380,
+      "total_teachers": 35,
+      "contact_email": "info@almajd.edu.sa",
+      "contact_phone": "+966 12 567 8901",
+      "current_evaluation_id": "REQ-2025-004",
+      "published_score": {
+        "compliance": "Pass",
+        "excellence_score": 78.5,
+        "excellence_grade": "C+",
+        "satisfaction_score": 82.0,
+        "satisfaction_grade": "B",
+        "evaluation_date": "2025-07-10"
+      }
+    },
+    {
+      "id": "SCH-2025-005",
+      "name": "Dammam International School",
+      "name_ar": "مدرسة الدمام الدولية",
+      "region": "Eastern",
+      "city": "Dammam",
+      "level": "Secondary",
+      "gender_model": "Co-ed",
+      "license_number": "LIC-2024-001238",
+      "license_expiry": "2027-12-31",
+      "total_students": 520,
+      "total_teachers": 48,
+      "contact_email": "info@dammam-intl.edu.sa",
+      "contact_phone": "+966 13 234 5678",
+      "current_evaluation_id": "REQ-2025-005",
+      "published_score": {
+        "compliance": "Pass",
+        "excellence_score": 95.3,
+        "excellence_grade": "A+",
+        "satisfaction_score": 93.8,
+        "satisfaction_grade": "A",
+        "evaluation_date": "2025-06-05"
+      }
+    }
+  ]
+}

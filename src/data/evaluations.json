@@ -1,0 +1,421 @@
+{
+  "evaluations": [
+    {
+      "id": "REQ-2025-001",
+      "school_id": "SCH-2025-001",
+      "school_name": "Riyadh International School",
+      "region": "Riyadh",
+      "city": "Riyadh City",
+      "level": "Secondary",
+      "status": "in_progress",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-10-01",
+      "deadline": "2025-11-30",
+      "submission_date": null,
+      "review_start_date": null,
+      "completion_percentage": 75,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["license_2025.pdf"],
+            "status": "complete",
+            "ops_review": null
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": null,
+            "evidence": [],
+            "status": "pending",
+            "ops_review": null
+          },
+          {
+            "id": "C103",
+            "question": "Upload financial audit report (latest year)",
+            "question_ar": "رفع تقرير التدقيق المالي (السنة الأخيرة)",
+            "type": "file_upload",
+            "answer": "yes",
+            "evidence": ["audit_2024.pdf"],
+            "status": "complete",
+            "ops_review": null
+          },
+          {
+            "id": "C104",
+            "question": "Are all teacher qualification certificates on file?",
+            "question_ar": "هل جميع شهادات مؤهلات المعلمين مودعة؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["teacher_certs_bundle.pdf"],
+            "status": "complete",
+            "ops_review": null
+          },
+          {
+            "id": "C105",
+            "question": "Number of safety violations in the past year",
+            "question_ar": "عدد مخالفات السلامة في العام الماضي",
+            "type": "number",
+            "answer": "2",
+            "evidence": ["violations_report.pdf"],
+            "status": "complete",
+            "ops_review": null
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 85.0,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "qualified_teachers": 34,
+            "total_teachers": 40
+          }
+        },
+        {
+          "code": "E202",
+          "name": "Teacher Training Completion",
+          "name_ar": "إكمال تدريب المعلمين",
+          "score": 77.5,
+          "weight": 4,
+          "data_source": "MoE PD System",
+          "calculated": true,
+          "details": {
+            "teachers_completed_pd": 31,
+            "total_teachers": 40
+          }
+        },
+        {
+          "code": "E203",
+          "name": "Student-Teacher Ratio",
+          "name_ar": "نسبة الطلاب إلى المعلمين",
+          "score": 92.0,
+          "weight": 3,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "total_students": 450,
+            "total_teachers": 40,
+            "ratio": 11.25,
+            "target_ratio": 15
+          }
+        },
+        {
+          "code": "E204",
+          "name": "Infrastructure Quality",
+          "name_ar": "جودة البنية التحتية",
+          "score": 88.0,
+          "weight": 4,
+          "data_source": "School self-report + Ops verification",
+          "calculated": true,
+          "details": {
+            "facilities_score": 85,
+            "technology_score": 90,
+            "safety_features_score": 90
+          }
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index (Bullying Rate)",
+          "name_ar": "مؤشر السلامة (معدل التنمر)",
+          "score": 95.6,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true,
+          "details": {
+            "bullying_incidents": 2,
+            "total_students": 450
+          }
+        },
+        {
+          "code": "S302",
+          "name": "Parent Satisfaction Survey",
+          "name_ar": "استبيان رضا أولياء الأمور",
+          "score": 87.2,
+          "weight": 4,
+          "data_source": "Survey API",
+          "calculated": true,
+          "details": {
+            "survey_responses": 320,
+            "avg_rating": 4.36,
+            "out_of": 5
+          }
+        },
+        {
+          "code": "S303",
+          "name": "Student Engagement Score",
+          "name_ar": "درجة مشاركة الطلاب",
+          "score": 85.0,
+          "weight": 3,
+          "data_source": "Survey API",
+          "calculated": true,
+          "details": {
+            "attendance_rate": 94,
+            "participation_rate": 82,
+            "satisfaction_rate": 79
+          }
+        }
+      ],
+      "pending_items": [
+        {
+          "type": "missing_data",
+          "question_id": "C102",
+          "description": "Fire Safety Certificate upload",
+          "description_ar": "رفع شهادة السلامة من الحريق"
+        }
+      ],
+      "school_notes": "",
+      "ops_notes": ""
+    },
+    {
+      "id": "REQ-2025-002",
+      "school_id": "SCH-2025-002",
+      "school_name": "Al-Noor Academy",
+      "region": "Riyadh",
+      "city": "Riyadh City",
+      "level": "Primary",
+      "status": "returned_for_correction",
+      "version": "2/4",
+      "correction_count": 1,
+      "created_date": "2025-09-15",
+      "deadline": "2025-11-15",
+      "submission_date": "2025-10-10",
+      "review_start_date": "2025-10-12",
+      "completion_percentage": 100,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["old_license_2024.pdf"],
+            "status": "returned_for_correction",
+            "ops_review": {
+              "status": "return_for_correction",
+              "comment": "License expired in June 2025. Please provide renewed license.",
+              "comment_ar": "انتهت صلاحية الرخصة في يونيو 2025. يرجى تقديم الرخصة المجددة.",
+              "reviewer": "user002",
+              "review_date": "2025-10-13"
+            }
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["fire_cert_2025.pdf"],
+            "status": "accepted",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "Certificate verified and valid.",
+              "comment_ar": "تم التحقق من الشهادة وهي سارية المفعول.",
+              "reviewer": "user002",
+              "review_date": "2025-10-13"
+            }
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 82.0,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "qualified_teachers": 23,
+            "total_teachers": 28
+          }
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index",
+          "name_ar": "مؤشر السلامة",
+          "score": 92.0,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true,
+          "details": {
+            "bullying_incidents": 1,
+            "total_students": 320
+          }
+        }
+      ],
+      "pending_items": [
+        {
+          "type": "correction_requested",
+          "question_id": "C101",
+          "description": "License expired - provide renewed license",
+          "description_ar": "انتهت صلاحية الرخصة - قدم الرخصة المجددة",
+          "ops_comment": "License expired in June 2025. Please provide renewed license."
+        }
+      ],
+      "school_notes": "We submitted renewal application in May. Awaiting approval.",
+      "ops_notes": "School submitted old license. Needs updated document."
+    },
+    {
+      "id": "REQ-2025-003",
+      "school_id": "SCH-2025-001",
+      "school_name": "Riyadh International School",
+      "region": "Riyadh",
+      "city": "Riyadh City",
+      "level": "Secondary",
+      "status": "closed",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-08-01",
+      "deadline": "2025-09-30",
+      "submission_date": "2025-09-10",
+      "review_start_date": "2025-09-12",
+      "approved_date": "2025-09-20",
+      "published_date": "2025-09-25",
+      "completion_percentage": 100,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": []
+      },
+      "excellence_indicators": [],
+      "satisfaction_indicators": [],
+      "pending_items": [],
+      "school_notes": "",
+      "ops_notes": "Previous evaluation cycle - now closed."
+    },
+    {
+      "id": "REQ-2025-004",
+      "school_id": "SCH-2025-004",
+      "school_name": "Al-Majd Academy",
+      "region": "Jeddah",
+      "city": "Jeddah",
+      "level": "Secondary",
+      "status": "submitted",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-10-05",
+      "deadline": "2025-12-05",
+      "submission_date": "2025-10-25",
+      "review_start_date": null,
+      "completion_percentage": 100,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["license_2025.pdf"],
+            "status": "complete",
+            "ops_review": null
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 77.0,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index",
+          "name_ar": "مؤشر السلامة",
+          "score": 88.0,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true
+        }
+      ],
+      "pending_items": [],
+      "school_notes": "Completed all requirements. Ready for review.",
+      "ops_notes": ""
+    },
+    {
+      "id": "REQ-2025-005",
+      "school_id": "SCH-2025-005",
+      "school_name": "Dammam International School",
+      "region": "Eastern",
+      "city": "Dammam",
+      "level": "Secondary",
+      "status": "draft",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-10-20",
+      "deadline": "2025-12-20",
+      "submission_date": null,
+      "review_start_date": null,
+      "completion_percentage": 0,
+      "assigned_reviewer": null,
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": null,
+            "evidence": [],
+            "status": "pending",
+            "ops_review": null
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": null,
+            "evidence": [],
+            "status": "pending",
+            "ops_review": null
+          }
+        ]
+      },
+      "excellence_indicators": [],
+      "satisfaction_indicators": [],
+      "pending_items": [
+        {
+          "type": "missing_data",
+          "question_id": "C101",
+          "description": "Operating license required",
+          "description_ar": "رخصة التشغيل مطلوبة"
+        },
+        {
+          "type": "missing_data",
+          "question_id": "C102",
+          "description": "Fire safety certificate required",
+          "description_ar": "شهادة السلامة من الحريق مطلوبة"
+        }
+      ],
+      "school_notes": "",
+      "ops_notes": ""
+    }
+  ]
+}

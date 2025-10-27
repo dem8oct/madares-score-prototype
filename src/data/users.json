@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": "user001",
+      "username": "ahmad.school",
+      "name": "Ahmad Al-Mutairi",
+      "name_ar": "أحمد المطيري",
+      "role": "school_admin",
+      "email": "ahmad@riyadh-intl.edu.sa",
+      "school_id": "SCH-2025-001",
+      "phone": "+966 50 123 4567"
+    },
+    {
+      "id": "user002",
+      "username": "sara.ops",
+      "name": "Sara Al-Harbi",
+      "name_ar": "سارة الحربي",
+      "role": "ops_reviewer",
+      "email": "sara.reviewer@moe.sa",
+      "region": "Riyadh",
+      "phone": "+966 50 234 5678"
+    },
+    {
+      "id": "user003",
+      "username": "dr.lina",
+      "name": "Dr. Lina Al-Ghamdi",
+      "name_ar": "د. لينا الغامدي",
+      "role": "committee_member",
+      "email": "lina.director@moe.sa",
+      "phone": "+966 50 345 6789"
+    },
+    {
+      "id": "user004",
+      "username": "omar.appeals",
+      "name": "Omar Al-Zahrani",
+      "name_ar": "عمر الزهراني",
+      "role": "appeals_officer",
+      "email": "omar.appeals@moe.sa",
+      "phone": "+966 50 456 7890"
+    },
+    {
+      "id": "user005",
+      "username": "fatima.school",
+      "name": "Fatima Al-Shammari",
+      "name_ar": "فاطمة الشمري",
+      "role": "school_admin",
+      "email": "fatima@alnoor.edu.sa",
+      "school_id": "SCH-2025-002",
+      "phone": "+966 50 567 8901"
+    },
+    {
+      "id": "user006",
+      "username": "khalid.national",
+      "name": "Khalid Al-Dosari",
+      "name_ar": "خالد الدوسري",
+      "role": "national_viewer",
+      "email": "khalid.director@moe.sa",
+      "phone": "+966 50 678 9012"
+    }
+  ]
+}
