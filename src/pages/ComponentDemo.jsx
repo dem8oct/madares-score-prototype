@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/layout/Header';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import Card from '../components/common/Card';
@@ -14,7 +13,6 @@ const ComponentDemo = () => {
   const [inputValue, setInputValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [language, setLanguage] = useState('en');
 
   // Sample data for table
   const tableData = [
@@ -38,21 +36,8 @@ const ComponentDemo = () => {
     { key: 'score', label: 'Score', sortable: true },
   ];
 
-  const mockUser = {
-    name: 'Admin User',
-    role: 'Operations Reviewer'
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header
-        user={mockUser}
-        language={language}
-        onLanguageToggle={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-        onLogout={() => alert('Logout clicked')}
-      />
-
-      <div className="max-w-7xl mx-auto px-6 py-8">
+    <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Design System Components
@@ -247,7 +232,6 @@ const ComponentDemo = () => {
           </div>
 
         </div>
-      </div>
 
       {/* Modal */}
       <Modal
