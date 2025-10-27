@@ -1,0 +1,133 @@
+{
+  "domains": [
+    {
+      "id": "compliance",
+      "name": "Compliance",
+      "name_ar": "الامتثال",
+      "weight": 0.50,
+      "scoring_style": "binary",
+      "description": "Policies, safety, finance, academic standards"
+    },
+    {
+      "id": "excellence",
+      "name": "Institutional Excellence",
+      "name_ar": "التميز المؤسسي",
+      "weight": 0.30,
+      "scoring_style": "numeric",
+      "description": "Teaching quality, PD, infrastructure, outcomes"
+    },
+    {
+      "id": "satisfaction",
+      "name": "Beneficiary Satisfaction",
+      "name_ar": "رضا المستفيدين",
+      "weight": 0.20,
+      "scoring_style": "numeric",
+      "description": "Parent, student, teacher sentiment"
+    }
+  ],
+  "indicators": [
+    {
+      "code": "E201",
+      "domain": "excellence",
+      "sub_category": "Teaching Quality",
+      "sub_category_ar": "جودة التدريس",
+      "name": "Teacher Qualifications",
+      "name_ar": "مؤهلات المعلمين",
+      "formula": "(qualified_teachers / total_teachers) * 100",
+      "weight": 5,
+      "type": "automatic",
+      "data_source": "Noor",
+      "status": "active"
+    },
+    {
+      "code": "E202",
+      "domain": "excellence",
+      "sub_category": "Professional Development",
+      "sub_category_ar": "التطوير المهني",
+      "name": "Teacher Training Completion",
+      "name_ar": "إكمال تدريب المعلمين",
+      "formula": "(teachers_completed_pd / total_teachers) * 100",
+      "weight": 4,
+      "type": "automatic",
+      "data_source": "MoE PD System",
+      "status": "active"
+    },
+    {
+      "code": "E203",
+      "domain": "excellence",
+      "sub_category": "Resource Management",
+      "sub_category_ar": "إدارة الموارد",
+      "name": "Student-Teacher Ratio",
+      "name_ar": "نسبة الطلاب إلى المعلمين",
+      "formula": "Score based on proximity to ideal 15:1 ratio",
+      "weight": 3,
+      "type": "automatic",
+      "data_source": "Noor",
+      "status": "active"
+    },
+    {
+      "code": "E204",
+      "domain": "excellence",
+      "sub_category": "Infrastructure",
+      "sub_category_ar": "البنية التحتية",
+      "name": "Infrastructure Quality",
+      "name_ar": "جودة البنية التحتية",
+      "formula": "Composite of facilities, technology, safety features",
+      "weight": 4,
+      "type": "automatic",
+      "data_source": "School self-report + Ops verification",
+      "status": "active"
+    },
+    {
+      "code": "S301",
+      "domain": "satisfaction",
+      "sub_category": "Safety & Engagement",
+      "sub_category_ar": "السلامة والمشاركة",
+      "name": "Safety Index (Bullying Rate)",
+      "name_ar": "مؤشر السلامة (معدل التنمر)",
+      "formula": "100 - ((bullying_incidents / total_students) * 1000)",
+      "weight": 5,
+      "type": "automatic",
+      "data_source": "Incident reports",
+      "status": "active"
+    },
+    {
+      "code": "S302",
+      "domain": "satisfaction",
+      "sub_category": "Parent Engagement",
+      "sub_category_ar": "مشاركة أولياء الأمور",
+      "name": "Parent Satisfaction Survey",
+      "name_ar": "استبيان رضا أولياء الأمور",
+      "formula": "(avg_rating / 5) * 100",
+      "weight": 4,
+      "type": "automatic",
+      "data_source": "Survey API",
+      "status": "active"
+    },
+    {
+      "code": "S303",
+      "domain": "satisfaction",
+      "sub_category": "Student Engagement",
+      "sub_category_ar": "مشاركة الطلاب",
+      "name": "Student Engagement Score",
+      "name_ar": "درجة مشاركة الطلاب",
+      "formula": "Composite of attendance, participation, satisfaction",
+      "weight": 3,
+      "type": "automatic",
+      "data_source": "Survey API",
+      "status": "active"
+    }
+  ],
+  "grade_bands": [
+    { "min": 95, "max": 100, "grade": "A+", "color": "success", "color_hex": "#16a34a" },
+    { "min": 90, "max": 94, "grade": "A", "color": "success", "color_hex": "#22c55e" },
+    { "min": 85, "max": 89, "grade": "B+", "color": "success", "color_hex": "#84cc16" },
+    { "min": 80, "max": 84, "grade": "B", "color": "warning", "color_hex": "#eab308" },
+    { "min": 75, "max": 79, "grade": "C+", "color": "warning", "color_hex": "#f59e0b" },
+    { "min": 70, "max": 74, "grade": "C", "color": "warning", "color_hex": "#f97316" },
+    { "min": 65, "max": 69, "grade": "D+", "color": "danger", "color_hex": "#fb923c" },
+    { "min": 60, "max": 64, "grade": "D", "color": "danger", "color_hex": "#f87171" },
+    { "min": 50, "max": 59, "grade": "E", "color": "danger", "color_hex": "#ef4444" },
+    { "min": 0, "max": 49, "grade": "F", "color": "danger", "color_hex": "#dc2626" }
+  ]
+}
