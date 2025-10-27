@@ -7,33 +7,68 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Madares brand colors
+        // Primary colors (Ministry brand)
         primary: {
-          50: '#e6f4f1',
-          100: '#b3dfd4',
-          200: '#80cab7',
-          300: '#4db59a',
-          400: '#1aa07d',
-          500: '#00875a', // Primary green
-          600: '#006b48',
-          700: '#004f36',
-          800: '#003324',
-          900: '#001712',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
         },
-        success: '#10b981',
-        warning: '#f59e0b',
-        danger: '#ef4444',
-        info: '#3b82f6',
+        // Status colors
+        success: {
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+        },
+        warning: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          500: '#f59e0b',
+          600: '#d97706',
+          800: '#92400e',
+        },
+        danger: {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          500: '#ef4444',
+          600: '#dc2626',
+          800: '#991b1b',
+        },
+        // Neutral colors
+        gray: {
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937',
+          900: '#111827',
+        },
       },
       fontFamily: {
-        arabic: ['Noto Sans Arabic', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        arabic: ['Tajawal', 'Noto Sans Arabic', 'sans-serif'],
       },
-      spacing: {
-        '128': '32rem',
-        '144': '36rem',
+      animation: {
+        'slide-in-right': 'slideInRight 0.3s ease-out',
+        'slide-out-right': 'slideOutRight 0.3s ease-in',
       },
-      borderRadius: {
-        '4xl': '2rem',
+      keyframes: {
+        slideInRight: {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        slideOutRight: {
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(100%)', opacity: '0' },
+        },
       },
     },
   },
