@@ -13,14 +13,14 @@ import ComponentDemo from './pages/ComponentDemo';
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
 
+  // Show role selector after login (check this FIRST)
+  if (showRoleSelector) {
+    return <RoleSelector />;
+  }
+
   // Show login if not authenticated
   if (!isAuthenticated) {
     return <Login />;
-  }
-
-  // Show role selector after login
-  if (showRoleSelector) {
-    return <RoleSelector />;
   }
 
   // Main app with header
