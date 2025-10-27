@@ -67,17 +67,17 @@ export const getDaysRemainingText = (deadline) => {
 
 // Filter evaluations by criteria
 export const filterEvaluations = (evaluations, filters) => {
-  return evaluations.filter(eval => {
-    if (filters.region && filters.region !== 'all' && eval.region !== filters.region) {
+  return evaluations.filter(evaluation => {
+    if (filters.region && filters.region !== 'all' && evaluation.region !== filters.region) {
       return false;
     }
-    if (filters.city && filters.city !== 'all' && eval.city !== filters.city) {
+    if (filters.city && filters.city !== 'all' && evaluation.city !== filters.city) {
       return false;
     }
-    if (filters.level && filters.level !== 'all' && eval.level !== filters.level) {
+    if (filters.level && filters.level !== 'all' && evaluation.level !== filters.level) {
       return false;
     }
-    if (filters.status && filters.status !== 'all' && eval.status !== filters.status) {
+    if (filters.status && filters.status !== 'all' && evaluation.status !== filters.status) {
       return false;
     }
     return true;

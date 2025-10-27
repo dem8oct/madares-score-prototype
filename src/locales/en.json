@@ -1,0 +1,74 @@
+{
+  "app": {
+    "title": "Madares Score System",
+    "subtitle": "Ministry of Education - Private Education Agency"
+  },
+  "auth": {
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "selectRole": "Select Your Role",
+    "logout": "Logout",
+    "switchRole": "Switch Role"
+  },
+  "roles": {
+    "school_admin": "School Administrator",
+    "ops_reviewer": "Operations Reviewer",
+    "committee_member": "Committee Member",
+    "appeals_officer": "Appeals Officer",
+    "national_viewer": "National Dashboard",
+    "public": "Public Portal"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "approve": "Approve",
+    "reject": "Reject",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "all": "All",
+    "yes": "Yes",
+    "no": "No",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "evaluations": "Evaluations",
+    "schools": "Schools",
+    "reports": "Reports",
+    "settings": "Settings"
+  },
+  "evaluation": {
+    "status": {
+      "draft": "Draft",
+      "in_progress": "In Progress",
+      "submitted": "Submitted",
+      "under_review": "Under Review",
+      "returned_for_correction": "Returned for Correction",
+      "pending_committee": "Pending Committee",
+      "approved": "Approved",
+      "published": "Published",
+      "closed": "Closed"
+    },
+    "version": "Version",
+    "deadline": "Deadline",
+    "completion": "Completion",
+    "pendingItems": "Pending Items",
+    "submitForReview": "Submit for Review",
+    "saveDraft": "Save Draft"
+  },
+  "domains": {
+    "compliance": "Compliance",
+    "excellence": "Institutional Excellence",
+    "satisfaction": "Beneficiary Satisfaction"
+  }
+}
