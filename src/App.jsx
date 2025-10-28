@@ -11,13 +11,13 @@ import Header from './components/layout/Header';
 import ComponentDemo from './pages/ComponentDemo';
 import OpsReviewerDashboard from './pages/OpsReviewer';
 import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
+import SchoolAdminDashboard from './pages/SchoolAdmin';
+import CurrentEvaluation from './pages/SchoolAdmin/CurrentEvaluation';
+import CommitteeDashboard from './pages/Committee';
+import PublicPortal from './pages/Public';
 
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
-
-  // Debug: Log current user role
-  console.log('Current user:', user);
-  console.log('User role:', user?.role);
 
   // Show role selector after login (check this FIRST)
   if (showRoleSelector) {
@@ -33,20 +33,6 @@ function AppRoutes() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      {/* DEBUG: Show current role */}
-      <div style={{
-        position: 'fixed',
-        bottom: '10px',
-        right: '10px',
-        background: 'red',
-        color: 'white',
-        padding: '10px',
-        borderRadius: '5px',
-        zIndex: 9999,
-        fontWeight: 'bold'
-      }}>
-        ROLE: {user?.role || 'NONE'}
-      </div>
       <main>
         <Routes>
           {/* Operations Reviewer Routes */}
@@ -58,13 +44,41 @@ function AppRoutes() {
             </>
           )}
 
-          {/* Other Roles */}
-          {user?.role !== 'ops_reviewer' && (
+          {/* School Admin Routes */}
+          {user?.role === 'school_admin' && (
+            <>
+              <Route path="/school" element={<SchoolAdminDashboard />} />
+              <Route path="/school/evaluation" element={<CurrentEvaluation />} />
+              <Route path="*" element={<Navigate to="/school" replace />} />
+            </>
+          )}
+
+          {/* Committee Member Routes */}
+          {user?.role === 'committee_member' && (
+            <>
+              <Route path="/committee" element={<CommitteeDashboard />} />
+              <Route path="*" element={<Navigate to="/committee" replace />} />
+            </>
+          )}
+
+          {/* Public Portal Routes */}
+          {user?.role === 'public' && (
+            <>
+              <Route path="/public" element={<PublicPortal />} />
+              <Route path="*" element={<Navigate to="/public" replace />} />
+            </>
+          )}
+
+          {/* Other Roles (Appeals Officer, National Viewer) */}
+          {(user?.role === 'appeals_officer' || user?.role === 'national_viewer') && (
             <>
               <Route path="/" element={<ComponentDemo />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           )}
+
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>
