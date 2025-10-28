@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useEvaluation } from '../../context/EvaluationContext';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
+import { mockSchools } from '../../data/mockData';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
+import ActionDropdownMenu from '../../components/ops/ActionDropdownMenu';
+import CreateRequestModal from '../../components/ops/CreateRequestModal';
 import {
   Search, Download, FileText, Clock, AlertCircle, TrendingUp,
   ChevronLeft, ChevronRight, Plus, MoreVertical, X
@@ -47,6 +50,7 @@ const EvaluationRequestsTable = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   // Filters
   const [filters, setFilters] = useState({
@@ -177,6 +181,38 @@ const EvaluationRequestsTable = () => {
 
   const handleOpenReview = (evalId) => {
     navigate(`/ops/evaluation/${evalId}`);
+  };
+
+  const handleDropdownAction = (action, evaluation) => {
+    switch (action) {
+      case 'open_review':
+        navigate(`/ops/evaluation/${evaluation.id}`);
+        break;
+      case 'assign_to_me':
+        success(`Assigned ${evaluation.school_name} to ${currentUser.name}`);
+        // In real app: update evaluation.assigned_reviewer
+        break;
+      case 'view_history':
+        success(`Opening history for ${evaluation.id} (Demo)`);
+        // In real app: navigate to history page
+        break;
+      case 'download_evidence':
+        success(`Downloading evidence for ${evaluation.school_name} (Demo)`);
+        // In real app: download ZIP file
+        break;
+      case 'add_note':
+        success(`Opening note dialog for ${evaluation.id} (Demo)`);
+        // In real app: open modal to add internal note
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleCreateRequests = (schools, deadline) => {
+    success(`Creating ${schools.length} evaluation request(s) with deadline ${deadline} (Demo)`);
+    // In real app: POST to API to create evaluation requests
+    // Then refresh evaluations list
   };
 
   const getStatusBadge = (status, version) => {
@@ -401,7 +437,7 @@ const EvaluationRequestsTable = () => {
             </div>
             <Button
               variant="primary"
-              onClick={() => success('Create Request modal would open here (coming soon)')}
+              onClick={() => setIsCreateModalOpen(true)}
               icon={<Plus className="w-4 h-4" />}
             >
               Create New Request
@@ -493,13 +529,10 @@ const EvaluationRequestsTable = () => {
                       <div className="text-xs text-gray-500">{evaluation.deadline}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleOpenReview(evaluation.id)}
-                      >
-                        Open
-                      </Button>
+                      <ActionDropdownMenu
+                        evaluation={evaluation}
+                        onAction={handleDropdownAction}
+                      />
                     </td>
                   </tr>
                 );
@@ -561,6 +594,15 @@ const EvaluationRequestsTable = () => {
           </div>
         </div>
       </Card>
+
+      {/* Create Request Modal */}
+      <CreateRequestModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        schools={mockSchools}
+        evaluations={evaluations}
+        onCreateRequests={handleCreateRequests}
+      />
     </div>
   );
 };
