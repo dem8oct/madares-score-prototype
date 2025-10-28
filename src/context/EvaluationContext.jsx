@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-import { mockEvaluations } from '../data/mockData';
+import React, { createContext, useContext, useState, useMemo } from 'react';
+import { mockEvaluations, mockSchools } from '../data/mockData';
 
 const EvaluationContext = createContext();
 
@@ -13,7 +13,18 @@ export const useEvaluation = () => {
 
 export const EvaluationProvider = ({ children }) => {
   // Store evaluations in state (starts with mock data)
-  const [evaluations, setEvaluations] = useState(mockEvaluations);
+  const [baseEvaluations, setBaseEvaluations] = useState(mockEvaluations);
+
+  // Enrich evaluations with school data
+  const evaluations = useMemo(() => {
+    return baseEvaluations.map(evaluation => {
+      const school = mockSchools.find(s => s.id === evaluation.school_id);
+      return {
+        ...evaluation,
+        gender_model: school?.gender_model || 'Unknown',
+      };
+    });
+  }, [baseEvaluations]);
 
   // Get evaluation by ID
   const getEvaluation = (id) => {
@@ -22,14 +33,14 @@ export const EvaluationProvider = ({ children }) => {
 
   // Update evaluation (simulates saving changes)
   const updateEvaluation = (id, updates) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e => e.id === id ? { ...e, ...updates } : e)
     );
   };
 
   // Update compliance answer
   const updateComplianceAnswer = (evalId, questionId, answer, evidence = []) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e => {
         if (e.id !== evalId) return e;
 
@@ -53,7 +64,7 @@ export const EvaluationProvider = ({ children }) => {
 
   // Update Ops review for a question
   const updateOpsReview = (evalId, questionId, reviewStatus, comment) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e => {
         if (e.id !== evalId) return e;
 
@@ -83,7 +94,7 @@ export const EvaluationProvider = ({ children }) => {
 
   // Submit evaluation for review
   const submitEvaluation = (evalId) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e =>
         e.id === evalId
           ? {
@@ -98,7 +109,7 @@ export const EvaluationProvider = ({ children }) => {
 
   // Return for correction (increments version)
   const returnForCorrection = (evalId) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e => {
         if (e.id !== evalId) return e;
 
@@ -120,7 +131,7 @@ export const EvaluationProvider = ({ children }) => {
 
   // Approve evaluation
   const approveEvaluation = (evalId) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e =>
         e.id === evalId
           ? {
@@ -135,7 +146,7 @@ export const EvaluationProvider = ({ children }) => {
 
   // Recalculate completion percentage
   const recalculateCompletion = (evalId) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e => {
         if (e.id !== evalId) return e;
 
@@ -150,7 +161,7 @@ export const EvaluationProvider = ({ children }) => {
 
   // Update pending items based on current state
   const updatePendingItems = (evalId) => {
-    setEvaluations(prev =>
+    setBaseEvaluations(prev =>
       prev.map(e => {
         if (e.id !== evalId) return e;
 

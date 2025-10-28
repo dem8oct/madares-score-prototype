@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import RoleSelector from './components/RoleSelector';
 import Header from './components/layout/Header';
 import ComponentDemo from './pages/ComponentDemo';
+import OpsReviewerDashboard from './pages/OpsReviewer';
 
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
@@ -28,9 +29,9 @@ function AppRoutes() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <main>
-        {/* For now, show component demo for all roles */}
-        {/* Will be replaced with role-specific dashboards in next documents */}
-        <ComponentDemo />
+        {/* Route to role-specific dashboards */}
+        {user?.role === 'ops_reviewer' && <OpsReviewerDashboard />}
+        {user?.role !== 'ops_reviewer' && <ComponentDemo />}
       </main>
     </div>
   );
