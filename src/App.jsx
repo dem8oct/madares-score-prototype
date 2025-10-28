@@ -11,6 +11,8 @@ import Header from './components/layout/Header';
 import ComponentDemo from './pages/ComponentDemo';
 import OpsReviewerDashboard from './pages/OpsReviewer';
 import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
+import SchoolAdminDashboard from './pages/SchoolAdmin';
+import CurrentEvaluation from './pages/SchoolAdmin/CurrentEvaluation';
 
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
@@ -40,8 +42,17 @@ function AppRoutes() {
             </>
           )}
 
+          {/* School Admin Routes */}
+          {user?.role === 'school_admin' && (
+            <>
+              <Route path="/school" element={<SchoolAdminDashboard />} />
+              <Route path="/school/evaluation" element={<CurrentEvaluation />} />
+              <Route path="*" element={<Navigate to="/school" replace />} />
+            </>
+          )}
+
           {/* Other Roles */}
-          {user?.role !== 'ops_reviewer' && (
+          {user?.role !== 'ops_reviewer' && user?.role !== 'school_admin' && (
             <>
               <Route path="/" element={<ComponentDemo />} />
               <Route path="*" element={<Navigate to="/" replace />} />
