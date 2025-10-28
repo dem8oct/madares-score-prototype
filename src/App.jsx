@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { EvaluationProvider } from './context/EvaluationContext';
@@ -10,6 +10,7 @@ import RoleSelector from './components/RoleSelector';
 import Header from './components/layout/Header';
 import ComponentDemo from './pages/ComponentDemo';
 import OpsReviewerDashboard from './pages/OpsReviewer';
+import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
 
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
@@ -28,7 +29,7 @@ function AppRoutes() {
     return <Login />;
   }
 
-  // Main app with header
+  // Main app with header and routes
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -47,12 +48,24 @@ function AppRoutes() {
         ROLE: {user?.role || 'NONE'}
       </div>
       <main>
-        {/* Route to role-specific dashboards */}
-        {user?.role === 'ops_reviewer' ? (
-          <OpsReviewerDashboard />
-        ) : (
-          <ComponentDemo />
-        )}
+        <Routes>
+          {/* Operations Reviewer Routes */}
+          {user?.role === 'ops_reviewer' && (
+            <>
+              <Route path="/ops" element={<OpsReviewerDashboard />} />
+              <Route path="/ops/evaluation/:id" element={<EvaluationReviewPage />} />
+              <Route path="*" element={<Navigate to="/ops" replace />} />
+            </>
+          )}
+
+          {/* Other Roles */}
+          {user?.role !== 'ops_reviewer' && (
+            <>
+              <Route path="/" element={<ComponentDemo />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </>
+          )}
+        </Routes>
       </main>
     </div>
   );
