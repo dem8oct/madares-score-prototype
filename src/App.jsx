@@ -13,6 +13,8 @@ import OpsReviewerDashboard from './pages/OpsReviewer';
 import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
 import SchoolAdminDashboard from './pages/SchoolAdmin';
 import CurrentEvaluation from './pages/SchoolAdmin/CurrentEvaluation';
+import CommitteeDashboard from './pages/Committee';
+import PublicPortal from './pages/Public';
 
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
@@ -51,13 +53,32 @@ function AppRoutes() {
             </>
           )}
 
-          {/* Other Roles */}
-          {user?.role !== 'ops_reviewer' && user?.role !== 'school_admin' && (
+          {/* Committee Member Routes */}
+          {user?.role === 'committee_member' && (
+            <>
+              <Route path="/committee" element={<CommitteeDashboard />} />
+              <Route path="*" element={<Navigate to="/committee" replace />} />
+            </>
+          )}
+
+          {/* Public Portal Routes */}
+          {user?.role === 'public' && (
+            <>
+              <Route path="/public" element={<PublicPortal />} />
+              <Route path="*" element={<Navigate to="/public" replace />} />
+            </>
+          )}
+
+          {/* Other Roles (Appeals Officer, National Viewer) */}
+          {(user?.role === 'appeals_officer' || user?.role === 'national_viewer') && (
             <>
               <Route path="/" element={<ComponentDemo />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           )}
+
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>
