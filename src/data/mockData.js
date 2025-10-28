@@ -77,6 +77,9 @@ export const filterEvaluations = (evaluations, filters) => {
     if (filters.level && filters.level !== 'all' && evaluation.level !== filters.level) {
       return false;
     }
+    if (filters.gender_model && filters.gender_model !== 'all' && evaluation.gender_model !== filters.gender_model) {
+      return false;
+    }
     if (filters.status && filters.status !== 'all' && evaluation.status !== filters.status) {
       return false;
     }
