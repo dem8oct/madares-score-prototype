@@ -14,6 +14,10 @@ import OpsReviewerDashboard from './pages/OpsReviewer';
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
 
+  // Debug: Log current user role
+  console.log('Current user:', user);
+  console.log('User role:', user?.role);
+
   // Show role selector after login (check this FIRST)
   if (showRoleSelector) {
     return <RoleSelector />;
@@ -30,8 +34,11 @@ function AppRoutes() {
       <Header />
       <main>
         {/* Route to role-specific dashboards */}
-        {user?.role === 'ops_reviewer' && <OpsReviewerDashboard />}
-        {user?.role !== 'ops_reviewer' && <ComponentDemo />}
+        {user?.role === 'ops_reviewer' ? (
+          <OpsReviewerDashboard />
+        ) : (
+          <ComponentDemo />
+        )}
       </main>
     </div>
   );
