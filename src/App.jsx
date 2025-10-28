@@ -32,6 +32,20 @@ function AppRoutes() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      {/* DEBUG: Show current role */}
+      <div style={{
+        position: 'fixed',
+        bottom: '10px',
+        right: '10px',
+        background: 'red',
+        color: 'white',
+        padding: '10px',
+        borderRadius: '5px',
+        zIndex: 9999,
+        fontWeight: 'bold'
+      }}>
+        ROLE: {user?.role || 'NONE'}
+      </div>
       <main>
         {/* Route to role-specific dashboards */}
         {user?.role === 'ops_reviewer' ? (
