@@ -246,10 +246,18 @@ const NewIndicatorModal = ({ isOpen, onClose }) => {
     name: '',
     name_ar: '',
     domain: 'Excellence',
+    indicator_type: '',
+    score_type: '',
     weight: '',
     data_source: '',
     description: '',
   });
+
+  const scoreTypeDescriptions = {
+    Binary: 'Yes/No or Pass/Fail scoring. Results in either 0 or 100 points. Example: Valid license (Yes=100, No=0)',
+    Numeric: 'Continuous numeric values converted to percentage. Example: Student-teacher ratio, attendance rate (calculated as percentage)',
+    Gradual: 'Multi-level scale scoring with defined thresholds. Example: 5-point scale (Excellent=100, Very Good=85, Good=70, Fair=55, Poor=40)',
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -261,6 +269,8 @@ const NewIndicatorModal = ({ isOpen, onClose }) => {
       name: '',
       name_ar: '',
       domain: 'Excellence',
+      indicator_type: '',
+      score_type: '',
       weight: '',
       data_source: '',
       description: '',
@@ -285,7 +295,7 @@ const NewIndicatorModal = ({ isOpen, onClose }) => {
           />
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Domain
+              Domain *
             </label>
             <select
               value={formData.domain}
@@ -299,6 +309,55 @@ const NewIndicatorModal = ({ isOpen, onClose }) => {
             </select>
           </div>
         </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Indicator Type *
+            </label>
+            <select
+              value={formData.indicator_type}
+              onChange={(e) => setFormData({ ...formData, indicator_type: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            >
+              <option value="">Select type...</option>
+              <option value="Performance">Performance</option>
+              <option value="Quality">Quality</option>
+              <option value="Compliance">Compliance</option>
+              <option value="Efficiency">Efficiency</option>
+              <option value="Outcome">Outcome</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Score Type *
+            </label>
+            <select
+              value={formData.score_type}
+              onChange={(e) => setFormData({ ...formData, score_type: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            >
+              <option value="">Select scoring method...</option>
+              <option value="Binary">Binary</option>
+              <option value="Numeric">Numeric</option>
+              <option value="Gradual">Gradual</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Score Type Description */}
+        {formData.score_type && (
+          <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm font-medium text-blue-900 mb-1">
+              {formData.score_type} Scoring:
+            </p>
+            <p className="text-xs text-blue-800">
+              {scoreTypeDescriptions[formData.score_type]}
+            </p>
+          </div>
+        )}
 
         <Input
           label="Indicator Name (English)"
