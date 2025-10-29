@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
-import { Globe, User, LogOut, Building2, ClipboardCheck } from 'lucide-react';
+import { Globe, User, LogOut, Building2, ClipboardCheck, Settings, Scale, BarChart3 } from 'lucide-react';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -75,6 +75,51 @@ const Header = () => {
                     Returned
                   </Link>
                 </div>
+              )}
+
+              {/* Committee Member Navigation */}
+              {user?.role === 'committee_member' && (
+                <Link
+                  to="/committee"
+                  className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
+                    isActivePath('/committee')
+                      ? 'bg-primary-50 text-primary-700'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <Settings className="w-4 h-4" />
+                  Committee Dashboard
+                </Link>
+              )}
+
+              {/* Appeals Officer Navigation */}
+              {user?.role === 'appeals_officer' && (
+                <Link
+                  to="/appeals"
+                  className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
+                    isActivePath('/appeals')
+                      ? 'bg-primary-50 text-primary-700'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <Scale className="w-4 h-4" />
+                  Appeals Dashboard
+                </Link>
+              )}
+
+              {/* National Viewer Navigation */}
+              {user?.role === 'national_viewer' && (
+                <Link
+                  to="/national"
+                  className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
+                    isActivePath('/national')
+                      ? 'bg-primary-50 text-primary-700'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  National Statistics
+                </Link>
               )}
             </nav>
           </div>

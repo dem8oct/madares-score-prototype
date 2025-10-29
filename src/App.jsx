@@ -12,6 +12,9 @@ import ComponentDemo from './pages/ComponentDemo';
 import OpsReviewerDashboard from './pages/OpsReviewer';
 import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
 import SchoolEvaluationPage from './pages/SchoolPortal/SchoolEvaluationPage';
+import CommitteeMemberDashboard from './pages/CommitteeMember';
+import AppealsOfficerDashboard from './pages/AppealsOfficer';
+import NationalViewerDashboard from './pages/NationalViewer';
 
 function AppRoutes() {
   const { isAuthenticated, showRoleSelector, user } = useAuth();
@@ -67,8 +70,32 @@ function AppRoutes() {
             </>
           )}
 
-          {/* Other Roles */}
-          {user?.role !== 'ops_reviewer' && user?.role !== 'school_admin' && (
+          {/* Committee Member Routes */}
+          {user?.role === 'committee_member' && (
+            <>
+              <Route path="/committee" element={<CommitteeMemberDashboard />} />
+              <Route path="*" element={<Navigate to="/committee" replace />} />
+            </>
+          )}
+
+          {/* Appeals Officer Routes */}
+          {user?.role === 'appeals_officer' && (
+            <>
+              <Route path="/appeals" element={<AppealsOfficerDashboard />} />
+              <Route path="*" element={<Navigate to="/appeals" replace />} />
+            </>
+          )}
+
+          {/* National Viewer Routes */}
+          {user?.role === 'national_viewer' && (
+            <>
+              <Route path="/national" element={<NationalViewerDashboard />} />
+              <Route path="*" element={<Navigate to="/national" replace />} />
+            </>
+          )}
+
+          {/* Public Role - Component Demo */}
+          {user?.role === 'public' && (
             <>
               <Route path="/" element={<ComponentDemo />} />
               <Route path="*" element={<Navigate to="/" replace />} />
