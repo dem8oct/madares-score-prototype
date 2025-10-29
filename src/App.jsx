@@ -55,7 +55,6 @@ function AppRoutes() {
             <>
               <Route path="/ops" element={<OpsReviewerDashboard />} />
               <Route path="/ops/evaluation/:id" element={<EvaluationReviewPage />} />
-              <Route path="/school/:schoolId/evaluation" element={<SchoolEvaluationPage />} />
               <Route path="*" element={<Navigate to="/ops" replace />} />
             </>
           )}
@@ -72,7 +71,6 @@ function AppRoutes() {
           {user?.role !== 'ops_reviewer' && user?.role !== 'school_admin' && (
             <>
               <Route path="/" element={<ComponentDemo />} />
-              <Route path="/school/:schoolId/evaluation" element={<SchoolEvaluationPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           )}

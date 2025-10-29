@@ -33,6 +33,7 @@ const Header = () => {
 
             {/* Navigation Menu */}
             <nav className="flex items-center gap-2">
+              {/* Ops Reviewer Navigation */}
               {user?.role === 'ops_reviewer' && (
                 <Link
                   to="/ops"
@@ -47,32 +48,34 @@ const Header = () => {
                 </Link>
               )}
 
-              {/* Demo School Links */}
-              <div className="flex items-center gap-1 pl-2 ml-2 border-l border-gray-200">
-                <span className="text-xs text-gray-500 px-2">Demo Schools:</span>
-                <Link
-                  to="/school/SCH-2025-001/evaluation"
-                  className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
-                    isActivePath('/school/SCH-2025-001')
-                      ? 'bg-warning-50 text-warning-700 border border-warning-200'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <Building2 className="w-4 h-4" />
-                  New Request
-                </Link>
-                <Link
-                  to="/school/SCH-2025-002/evaluation"
-                  className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
-                    isActivePath('/school/SCH-2025-002')
-                      ? 'bg-danger-50 text-danger-700 border border-danger-200'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <Building2 className="w-4 h-4" />
-                  Returned
-                </Link>
-              </div>
+              {/* School Admin Navigation - Demo School Links */}
+              {user?.role === 'school_admin' && (
+                <div className="flex items-center gap-1">
+                  <span className="text-xs text-gray-500 px-2">Demo Schools:</span>
+                  <Link
+                    to="/school/SCH-2025-001/evaluation"
+                    className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
+                      isActivePath('/school/SCH-2025-001')
+                        ? 'bg-warning-50 text-warning-700 border border-warning-200'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    <Building2 className="w-4 h-4" />
+                    New Request
+                  </Link>
+                  <Link
+                    to="/school/SCH-2025-002/evaluation"
+                    className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
+                      isActivePath('/school/SCH-2025-002')
+                        ? 'bg-danger-50 text-danger-700 border border-danger-200'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    <Building2 className="w-4 h-4" />
+                    Returned
+                  </Link>
+                </div>
+              )}
             </nav>
           </div>
 
