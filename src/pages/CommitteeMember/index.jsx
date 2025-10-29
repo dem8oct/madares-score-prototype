@@ -253,6 +253,11 @@ const NewIndicatorModal = ({ isOpen, onClose }) => {
     description: '',
   });
 
+  const indicatorTypeDescriptions = {
+    Manual: 'Data entry by evaluators or schools. Requires manual input and verification.',
+    Automatic: 'Data automatically collected from other sources (APIs, integrated systems, etc.). No manual entry required.',
+  };
+
   const scoreTypeDescriptions = {
     Binary: 'Yes/No or Pass/Fail scoring. Results in either 0 or 100 points. Example: Valid license (Yes=100, No=0)',
     Numeric: 'Continuous numeric values converted to percentage. Example: Student-teacher ratio, attendance rate (calculated as percentage)',
@@ -322,11 +327,8 @@ const NewIndicatorModal = ({ isOpen, onClose }) => {
               required
             >
               <option value="">Select type...</option>
-              <option value="Performance">Performance</option>
-              <option value="Quality">Quality</option>
-              <option value="Compliance">Compliance</option>
-              <option value="Efficiency">Efficiency</option>
-              <option value="Outcome">Outcome</option>
+              <option value="Manual">Manual (M)</option>
+              <option value="Automatic">Automatic (A)</option>
             </select>
           </div>
           <div>
@@ -346,6 +348,18 @@ const NewIndicatorModal = ({ isOpen, onClose }) => {
             </select>
           </div>
         </div>
+
+        {/* Indicator Type Description */}
+        {formData.indicator_type && (
+          <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg">
+            <p className="text-sm font-medium text-purple-900 mb-1">
+              {formData.indicator_type} Indicator:
+            </p>
+            <p className="text-xs text-purple-800">
+              {indicatorTypeDescriptions[formData.indicator_type]}
+            </p>
+          </div>
+        )}
 
         {/* Score Type Description */}
         {formData.score_type && (
