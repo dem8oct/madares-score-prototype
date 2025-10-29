@@ -18,6 +18,7 @@ const CommitteeDashboard = () => {
 
   // Modals
   const [showProposeModal, setShowProposeModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showDisableModal, setShowDisableModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showImpactModal, setShowImpactModal] = useState(false);
@@ -32,6 +33,15 @@ const CommitteeDashboard = () => {
     score_type: 'G', // B, N, or G
     formula: '',
     rationale: '',
+  });
+
+  const [editData, setEditData] = useState({
+    code: '',
+    name: '',
+    name_ar: '',
+    domain: 'Excellence',
+    weight: 3,
+    data_source: '',
   });
 
   const [selectedIndicator, setSelectedIndicator] = useState(null);
@@ -91,6 +101,30 @@ const CommitteeDashboard = () => {
     success('New indicator proposed for review');
     setShowProposeModal(false);
     resetProposalForm();
+  };
+
+  const handleEditIndicator = (indicator) => {
+    setEditData({
+      code: indicator.code,
+      name: indicator.name,
+      name_ar: indicator.name_ar || '',
+      domain: indicator.domain,
+      weight: indicator.weight,
+      data_source: indicator.data_source,
+    });
+    setShowEditModal(true);
+  };
+
+  const confirmEdit = () => {
+    setIndicators(prev =>
+      prev.map(ind =>
+        ind.code === editData.code
+          ? { ...ind, name: editData.name, name_ar: editData.name_ar, weight: editData.weight, domain: editData.domain, data_source: editData.data_source }
+          : ind
+      )
+    );
+    success(`Indicator ${editData.code} updated successfully`);
+    setShowEditModal(false);
   };
 
   const handleDisableIndicator = (indicator) => {
@@ -270,7 +304,12 @@ const CommitteeDashboard = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-right space-x-2">
                           {indicator.status === 'active' && (
                             <>
-                              <Button variant="ghost" size="sm" icon={<Edit className="w-4 h-4" />}>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleEditIndicator(indicator)}
+                                icon={<Edit className="w-4 h-4" />}
+                              >
                                 Edit
                               </Button>
                               <Button
@@ -672,6 +711,108 @@ const CommitteeDashboard = () => {
             <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-sm text-blue-900">
                 <strong>Note:</strong> All fields marked with * are required. Your proposal will be reviewed by the committee before being activated.
+              </p>
+            </div>
+          </div>
+        </Modal>
+
+        {/* Edit Indicator Modal */}
+        <Modal
+          isOpen={showEditModal}
+          onClose={() => {
+            setShowEditModal(false);
+          }}
+          title={`Edit Indicator: ${editData.code}`}
+          size="lg"
+          footer={
+            <>
+              <Button variant="outline" onClick={() => setShowEditModal(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={confirmEdit} icon={<Save className="w-4 h-4" />}>
+                Save Changes
+              </Button>
+            </>
+          }
+        >
+          <div className="space-y-4">
+            {/* Domain */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Domain <span className="text-danger-600">*</span>
+              </label>
+              <select
+                value={editData.domain}
+                onChange={(e) => setEditData({ ...editData, domain: e.target.value })}
+                className="w-full border-gray-300 rounded-lg"
+              >
+                <option value="Compliance">Compliance</option>
+                <option value="Excellence">Excellence</option>
+                <option value="Satisfaction">Satisfaction</option>
+              </select>
+            </div>
+
+            {/* Names */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Indicator Name - English <span className="text-danger-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={editData.name}
+                  onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                  className="w-full border-gray-300 rounded-lg"
+                  placeholder="Teacher Qualifications"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Indicator Name - Arabic
+                </label>
+                <input
+                  type="text"
+                  value={editData.name_ar}
+                  onChange={(e) => setEditData({ ...editData, name_ar: e.target.value })}
+                  className="w-full border-gray-300 rounded-lg"
+                  placeholder="مؤهلات المعلمين"
+                  dir="rtl"
+                />
+              </div>
+            </div>
+
+            {/* Weight */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Weight (1-5) <span className="text-danger-600">*</span>
+              </label>
+              <input
+                type="number"
+                min="1"
+                max="5"
+                value={editData.weight}
+                onChange={(e) => setEditData({ ...editData, weight: parseInt(e.target.value) })}
+                className="w-full border-gray-300 rounded-lg"
+              />
+            </div>
+
+            {/* Data Source */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Data Source <span className="text-danger-600">*</span>
+              </label>
+              <input
+                type="text"
+                value={editData.data_source}
+                onChange={(e) => setEditData({ ...editData, data_source: e.target.value })}
+                className="w-full border-gray-300 rounded-lg"
+                placeholder="e.g., Noor System, MoE PD System"
+              />
+            </div>
+
+            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-sm text-blue-900">
+                <strong>Note:</strong> Changes to indicator details will be applied to all future evaluations. Existing evaluations will not be affected.
               </p>
             </div>
           </div>

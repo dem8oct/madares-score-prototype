@@ -5,7 +5,7 @@
       "school_id": "SCH-2025-001",
       "school_name": "Riyadh International School",
       "region": "Riyadh",
-      "city": "Riyadh City",
+      "city": "Riyadh",
       "level": "Secondary",
       "status": "in_progress",
       "version": "1/4",
@@ -186,7 +186,7 @@
       "school_id": "SCH-2025-002",
       "school_name": "Al-Noor Academy",
       "region": "Riyadh",
-      "city": "Riyadh City",
+      "city": "Riyadh",
       "level": "Primary",
       "status": "returned_for_correction",
       "version": "2/4",
@@ -280,7 +280,7 @@
       "school_id": "SCH-2025-001",
       "school_name": "Riyadh International School",
       "region": "Riyadh",
-      "city": "Riyadh City",
+      "city": "Riyadh",
       "level": "Secondary",
       "status": "closed",
       "version": "1/4",
@@ -416,6 +416,606 @@
       ],
       "school_notes": "",
       "ops_notes": ""
+    },
+    {
+      "id": "REQ-2025-006",
+      "school_id": "SCH-2025-006",
+      "school_name": "Al-Huda International School",
+      "region": "Makkah",
+      "city": "Mecca",
+      "level": "Primary",
+      "status": "under_review",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-09-20",
+      "deadline": "2025-11-20",
+      "submission_date": "2025-10-18",
+      "review_start_date": "2025-10-22",
+      "completion_percentage": 100,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["license_2025.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "License verified and valid.",
+              "comment_ar": "تم التحقق من الرخصة وهي سارية المفعول.",
+              "reviewer": "user002",
+              "review_date": "2025-10-23"
+            }
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["fire_cert_2025.pdf"],
+            "status": "complete",
+            "ops_review": null
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 88.5,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "qualified_teachers": 23,
+            "total_teachers": 26
+          }
+        },
+        {
+          "code": "E202",
+          "name": "Teacher Training Completion",
+          "name_ar": "إكمال تدريب المعلمين",
+          "score": 84.6,
+          "weight": 4,
+          "data_source": "MoE PD System",
+          "calculated": true,
+          "details": {
+            "teachers_completed_pd": 22,
+            "total_teachers": 26
+          }
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index (Bullying Rate)",
+          "name_ar": "مؤشر السلامة (معدل التنمر)",
+          "score": 96.2,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true,
+          "details": {
+            "bullying_incidents": 1,
+            "total_students": 290
+          }
+        },
+        {
+          "code": "S302",
+          "name": "Parent Satisfaction Survey",
+          "name_ar": "استبيان رضا أولياء الأمور",
+          "score": 90.5,
+          "weight": 4,
+          "data_source": "Survey API",
+          "calculated": true,
+          "details": {
+            "survey_responses": 245,
+            "avg_rating": 4.53,
+            "out_of": 5
+          }
+        }
+      ],
+      "pending_items": [],
+      "school_notes": "All documents submitted and ready for final review.",
+      "ops_notes": "Excellent documentation. Nearing approval."
+    },
+    {
+      "id": "REQ-2025-007",
+      "school_id": "SCH-2025-007",
+      "school_name": "Al-Andalus Academy",
+      "region": "Madinah",
+      "city": "Medina",
+      "level": "Intermediate",
+      "status": "in_progress",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-10-10",
+      "deadline": "2025-12-10",
+      "submission_date": null,
+      "review_start_date": null,
+      "completion_percentage": 60,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["license_2025.pdf"],
+            "status": "complete",
+            "ops_review": null
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": null,
+            "evidence": [],
+            "status": "pending",
+            "ops_review": null
+          },
+          {
+            "id": "C103",
+            "question": "Upload financial audit report (latest year)",
+            "question_ar": "رفع تقرير التدقيق المالي (السنة الأخيرة)",
+            "type": "file_upload",
+            "answer": "yes",
+            "evidence": ["audit_2024.pdf"],
+            "status": "complete",
+            "ops_review": null
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 83.9,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "qualified_teachers": 26,
+            "total_teachers": 31
+          }
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index",
+          "name_ar": "مؤشر السلامة",
+          "score": 93.5,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true,
+          "details": {
+            "bullying_incidents": 2,
+            "total_students": 340
+          }
+        }
+      ],
+      "pending_items": [
+        {
+          "type": "missing_data",
+          "question_id": "C102",
+          "description": "Fire Safety Certificate upload",
+          "description_ar": "رفع شهادة السلامة من الحريق"
+        }
+      ],
+      "school_notes": "Working on gathering remaining documents.",
+      "ops_notes": ""
+    },
+    {
+      "id": "REQ-2025-008",
+      "school_id": "SCH-2025-008",
+      "school_name": "Taif Heights School",
+      "region": "Makkah",
+      "city": "Taif",
+      "level": "Secondary",
+      "status": "approved",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-09-01",
+      "deadline": "2025-10-31",
+      "submission_date": "2025-10-05",
+      "review_start_date": "2025-10-08",
+      "approved_date": "2025-10-20",
+      "completion_percentage": 100,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["license_2025.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "All documentation approved.",
+              "comment_ar": "تمت الموافقة على جميع الوثائق.",
+              "reviewer": "user002",
+              "review_date": "2025-10-10"
+            }
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["fire_cert_2025.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "Certificate verified.",
+              "comment_ar": "تم التحقق من الشهادة.",
+              "reviewer": "user002",
+              "review_date": "2025-10-10"
+            }
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 93.2,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "qualified_teachers": 41,
+            "total_teachers": 44
+          }
+        },
+        {
+          "code": "E202",
+          "name": "Teacher Training Completion",
+          "name_ar": "إكمال تدريب المعلمين",
+          "score": 90.9,
+          "weight": 4,
+          "data_source": "MoE PD System",
+          "calculated": true,
+          "details": {
+            "teachers_completed_pd": 40,
+            "total_teachers": 44
+          }
+        },
+        {
+          "code": "E203",
+          "name": "Student-Teacher Ratio",
+          "name_ar": "نسبة الطلاب إلى المعلمين",
+          "score": 94.5,
+          "weight": 3,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "total_students": 480,
+            "total_teachers": 44,
+            "ratio": 10.9,
+            "target_ratio": 15
+          }
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index (Bullying Rate)",
+          "name_ar": "مؤشر السلامة (معدل التنمر)",
+          "score": 97.1,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true,
+          "details": {
+            "bullying_incidents": 1,
+            "total_students": 480
+          }
+        },
+        {
+          "code": "S302",
+          "name": "Parent Satisfaction Survey",
+          "name_ar": "استبيان رضا أولياء الأمور",
+          "score": 88.6,
+          "weight": 4,
+          "data_source": "Survey API",
+          "calculated": true,
+          "details": {
+            "survey_responses": 392,
+            "avg_rating": 4.43,
+            "out_of": 5
+          }
+        }
+      ],
+      "pending_items": [],
+      "school_notes": "Thank you for the thorough review process.",
+      "ops_notes": "Excellent school. Approved for publication."
+    },
+    {
+      "id": "REQ-2025-009",
+      "school_id": "SCH-2025-009",
+      "school_name": "Al Khobar Modern School",
+      "region": "Eastern",
+      "city": "Al Khobar",
+      "level": "Primary",
+      "status": "pending_committee",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-09-25",
+      "deadline": "2025-11-25",
+      "submission_date": "2025-10-20",
+      "review_start_date": "2025-10-21",
+      "completion_percentage": 100,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["license_2025.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "License valid.",
+              "comment_ar": "الرخصة سارية المفعول.",
+              "reviewer": "user002",
+              "review_date": "2025-10-22"
+            }
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["fire_cert_2025.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "Certificate valid.",
+              "comment_ar": "الشهادة سارية المفعول.",
+              "reviewer": "user002",
+              "review_date": "2025-10-22"
+            }
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 78.8,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "qualified_teachers": 26,
+            "total_teachers": 33
+          }
+        },
+        {
+          "code": "E202",
+          "name": "Teacher Training Completion",
+          "name_ar": "إكمال تدريب المعلمين",
+          "score": 75.8,
+          "weight": 4,
+          "data_source": "MoE PD System",
+          "calculated": true,
+          "details": {
+            "teachers_completed_pd": 25,
+            "total_teachers": 33
+          }
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index (Bullying Rate)",
+          "name_ar": "مؤشر السلامة (معدل التنمر)",
+          "score": 91.7,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true,
+          "details": {
+            "bullying_incidents": 3,
+            "total_students": 360
+          }
+        },
+        {
+          "code": "S302",
+          "name": "Parent Satisfaction Survey",
+          "name_ar": "استبيان رضا أولياء الأمور",
+          "score": 82.4,
+          "weight": 4,
+          "data_source": "Survey API",
+          "calculated": true,
+          "details": {
+            "survey_responses": 285,
+            "avg_rating": 4.12,
+            "out_of": 5
+          }
+        }
+      ],
+      "pending_items": [],
+      "school_notes": "Awaiting committee review for final approval.",
+      "ops_notes": "Ops review complete. Forwarded to committee."
+    },
+    {
+      "id": "REQ-2025-010",
+      "school_id": "SCH-2025-010",
+      "school_name": "Al-Qalam Academy",
+      "region": "Madinah",
+      "city": "Medina",
+      "level": "Intermediate",
+      "status": "published",
+      "version": "1/4",
+      "correction_count": 0,
+      "created_date": "2025-08-15",
+      "deadline": "2025-10-15",
+      "submission_date": "2025-09-20",
+      "review_start_date": "2025-09-22",
+      "approved_date": "2025-10-05",
+      "published_date": "2025-10-12",
+      "completion_percentage": 100,
+      "assigned_reviewer": "user002",
+      "compliance_data": {
+        "questions": [
+          {
+            "id": "C101",
+            "question": "Do you have a valid operating license?",
+            "question_ar": "هل لديك رخصة تشغيل سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["license_2025.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "Excellent documentation.",
+              "comment_ar": "وثائق ممتازة.",
+              "reviewer": "user002",
+              "review_date": "2025-09-23"
+            }
+          },
+          {
+            "id": "C102",
+            "question": "Do you have a valid fire safety certificate?",
+            "question_ar": "هل لديك شهادة سلامة حريق سارية المفعول؟",
+            "type": "yes_no",
+            "answer": "yes",
+            "evidence": ["fire_cert_2025.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "Certificate approved.",
+              "comment_ar": "تمت الموافقة على الشهادة.",
+              "reviewer": "user002",
+              "review_date": "2025-09-23"
+            }
+          },
+          {
+            "id": "C103",
+            "question": "Upload financial audit report (latest year)",
+            "question_ar": "رفع تقرير التدقيق المالي (السنة الأخيرة)",
+            "type": "file_upload",
+            "answer": "yes",
+            "evidence": ["audit_2024.pdf"],
+            "status": "complete",
+            "ops_review": {
+              "status": "accepted",
+              "comment": "Financial audit clean.",
+              "comment_ar": "التدقيق المالي نظيف.",
+              "reviewer": "user002",
+              "review_date": "2025-09-24"
+            }
+          }
+        ]
+      },
+      "excellence_indicators": [
+        {
+          "code": "E201",
+          "name": "Teacher Qualifications",
+          "name_ar": "مؤهلات المعلمين",
+          "score": 96.6,
+          "weight": 5,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "qualified_teachers": 28,
+            "total_teachers": 29
+          }
+        },
+        {
+          "code": "E202",
+          "name": "Teacher Training Completion",
+          "name_ar": "إكمال تدريب المعلمين",
+          "score": 93.1,
+          "weight": 4,
+          "data_source": "MoE PD System",
+          "calculated": true,
+          "details": {
+            "teachers_completed_pd": 27,
+            "total_teachers": 29
+          }
+        },
+        {
+          "code": "E203",
+          "name": "Student-Teacher Ratio",
+          "name_ar": "نسبة الطلاب إلى المعلمين",
+          "score": 93.3,
+          "weight": 3,
+          "data_source": "Noor",
+          "calculated": true,
+          "details": {
+            "total_students": 310,
+            "total_teachers": 29,
+            "ratio": 10.7,
+            "target_ratio": 15
+          }
+        }
+      ],
+      "satisfaction_indicators": [
+        {
+          "code": "S301",
+          "name": "Safety Index (Bullying Rate)",
+          "name_ar": "مؤشر السلامة (معدل التنمر)",
+          "score": 99.0,
+          "weight": 5,
+          "data_source": "Incident reports",
+          "calculated": true,
+          "details": {
+            "bullying_incidents": 0,
+            "total_students": 310
+          }
+        },
+        {
+          "code": "S302",
+          "name": "Parent Satisfaction Survey",
+          "name_ar": "استبيان رضا أولياء الأمور",
+          "score": 91.8,
+          "weight": 4,
+          "data_source": "Survey API",
+          "calculated": true,
+          "details": {
+            "survey_responses": 268,
+            "avg_rating": 4.59,
+            "out_of": 5
+          }
+        },
+        {
+          "code": "S303",
+          "name": "Student Engagement Score",
+          "name_ar": "درجة مشاركة الطلاب",
+          "score": 89.3,
+          "weight": 3,
+          "data_source": "Survey API",
+          "calculated": true,
+          "details": {
+            "attendance_rate": 96,
+            "participation_rate": 87,
+            "satisfaction_rate": 85
+          }
+        }
+      ],
+      "pending_items": [],
+      "school_notes": "Proud to be published! Thank you.",
+      "ops_notes": "Top-tier school. Published with A+ rating."
     }
   ]
 }
