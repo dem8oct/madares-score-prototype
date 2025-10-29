@@ -16,6 +16,7 @@ import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
 import SchoolAdminDashboard from './pages/SchoolAdmin';
 import CommitteeDashboard from './pages/Committee';
 import AppealsDashboard from './pages/Appeals';
+import MasterDashboard from './pages/Master';
 import PublicPortal from './pages/Public';
 
 function AppRoutes() {
@@ -82,7 +83,7 @@ function AppRoutes() {
           {user?.role === 'master_dashboard' && (
             <>
               <Route path="/" element={<Navigate to="/master" replace />} />
-              <Route path="/master" element={<ComponentDemo />} />
+              <Route path="/master" element={<MasterDashboard />} />
               <Route path="*" element={<Navigate to="/master" replace />} />
             </>
           )}
