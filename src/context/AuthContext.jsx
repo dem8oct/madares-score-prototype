@@ -16,15 +16,25 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showRoleSelector, setShowRoleSelector] = useState(false);
 
-  // Mock login - accepts any username/password
+  // Login with username from users.json
   const login = (username, password) => {
-    // In a real app, this would validate credentials
-    // For demo, we just show role selector
-    setShowRoleSelector(true);
-    return true;
+    // Find user by username
+    const foundUser = mockUsers.find(u => u.username === username);
+
+    if (foundUser) {
+      // User found - login with their role
+      setUser(foundUser);
+      setIsAuthenticated(true);
+      setShowRoleSelector(false);
+      return true;
+    } else {
+      // User not found - show role selector for demo
+      setShowRoleSelector(true);
+      return false;
+    }
   };
 
-  // Select role after "login"
+  // Select role after "login" (fallback for demo)
   const selectRole = (role) => {
     // Find a user with this role from mock data
     const mockUser = mockUsers.find(u => u.role === role) || {
@@ -46,11 +56,11 @@ export const AuthProvider = ({ children }) => {
     selectRole(newRole);
   };
 
-  // Logout - resets to role selector
+  // Logout - resets to login
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
-    setShowRoleSelector(true);
+    setShowRoleSelector(false);
   };
 
   // Check if user has specific role
