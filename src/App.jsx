@@ -79,8 +79,8 @@ function AppRoutes() {
             </>
           )}
 
-          {/* Master Dashboard Routes */}
-          {user?.role === 'master_dashboard' && (
+          {/* National Viewer/Master Dashboard Routes */}
+          {user?.role === 'national_viewer' && (
             <>
               <Route path="/" element={<Navigate to="/master" replace />} />
               <Route path="/master" element={<MasterDashboard />} />
