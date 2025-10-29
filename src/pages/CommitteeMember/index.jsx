@@ -4,12 +4,15 @@ import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
 import Button from '../../components/common/Button';
 import Table from '../../components/common/Table';
-import { Award, Settings, TrendingUp, AlertCircle } from 'lucide-react';
+import Modal from '../../components/common/Modal';
+import Input from '../../components/common/Input';
+import { Award, Settings, TrendingUp, AlertCircle, Plus } from 'lucide-react';
 import { mockIndicators, mockDomains, mockGradeBands } from '../../data/mockData';
 
 const CommitteeMemberDashboard = () => {
   const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('indicators');
+  const [showNewIndicatorModal, setShowNewIndicatorModal] = useState(false);
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -109,15 +112,21 @@ const CommitteeMemberDashboard = () => {
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'indicators' && <IndicatorsTab />}
+      {activeTab === 'indicators' && <IndicatorsTab onOpenModal={() => setShowNewIndicatorModal(true)} />}
       {activeTab === 'domains' && <DomainsTab />}
       {activeTab === 'grades' && <GradeBandsTab />}
+
+      {/* New Indicator Modal */}
+      <NewIndicatorModal
+        isOpen={showNewIndicatorModal}
+        onClose={() => setShowNewIndicatorModal(false)}
+      />
     </div>
   );
 };
 
 // Indicators Tab
-const IndicatorsTab = () => {
+const IndicatorsTab = ({ onOpenModal }) => {
   const columns = [
     { key: 'code', label: 'Code', sortable: true },
     { key: 'name', label: 'Indicator Name', sortable: true },
@@ -142,8 +151,13 @@ const IndicatorsTab = () => {
         <h2 className="text-lg font-semibold text-gray-900">
           Evaluation Indicators
         </h2>
-        <Button variant="primary" size="sm">
-          Add New Indicator
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={onOpenModal}
+          leftIcon={<Plus className="w-4 h-4" />}
+        >
+          Propose New Indicator
         </Button>
       </div>
       <Table columns={columns} data={data} />
@@ -222,6 +236,130 @@ const GradeBandsTab = () => {
         ))}
       </div>
     </Card>
+  );
+};
+
+// New Indicator Modal
+const NewIndicatorModal = ({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState({
+    code: '',
+    name: '',
+    name_ar: '',
+    domain: 'Excellence',
+    weight: '',
+    data_source: '',
+    description: '',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // In real app, would save to backend
+    alert('New indicator proposal submitted for review!');
+    onClose();
+    setFormData({
+      code: '',
+      name: '',
+      name_ar: '',
+      domain: 'Excellence',
+      weight: '',
+      data_source: '',
+      description: '',
+    });
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Propose New Indicator"
+      size="lg"
+    >
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <Input
+            label="Indicator Code"
+            value={formData.code}
+            onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+            placeholder="E301"
+            required
+          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Domain
+            </label>
+            <select
+              value={formData.domain}
+              onChange={(e) => setFormData({ ...formData, domain: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            >
+              <option value="Excellence">Excellence</option>
+              <option value="Satisfaction">Satisfaction</option>
+              <option value="Compliance">Compliance</option>
+            </select>
+          </div>
+        </div>
+
+        <Input
+          label="Indicator Name (English)"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          placeholder="Teacher Professional Development Hours"
+          required
+        />
+
+        <Input
+          label="Indicator Name (Arabic)"
+          value={formData.name_ar}
+          onChange={(e) => setFormData({ ...formData, name_ar: e.target.value })}
+          placeholder="ساعات التطوير المهني للمعلمين"
+          required
+        />
+
+        <div className="grid grid-cols-2 gap-4">
+          <Input
+            label="Weight"
+            type="number"
+            value={formData.weight}
+            onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
+            placeholder="5"
+            min="1"
+            max="10"
+            required
+          />
+          <Input
+            label="Data Source"
+            value={formData.data_source}
+            onChange={(e) => setFormData({ ...formData, data_source: e.target.value })}
+            placeholder="Noor System"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Description / Justification
+          </label>
+          <textarea
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+            rows="4"
+            placeholder="Explain why this indicator should be added and how it will be measured..."
+            required
+          />
+        </div>
+
+        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+          <Button variant="outline" onClick={onClose} type="button">
+            Cancel
+          </Button>
+          <Button variant="primary" type="submit">
+            Submit Proposal
+          </Button>
+        </div>
+      </form>
+    </Modal>
   );
 };
 

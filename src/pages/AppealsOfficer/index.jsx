@@ -4,10 +4,13 @@ import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
 import Button from '../../components/common/Button';
 import Table from '../../components/common/Table';
-import { Scale, Clock, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
+import Modal from '../../components/common/Modal';
+import { Scale, Clock, CheckCircle, XCircle, AlertTriangle, FileText } from 'lucide-react';
 
 const AppealsOfficerDashboard = () => {
   const { language, t } = useLanguage();
+  const [selectedAppeal, setSelectedAppeal] = useState(null);
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   // Mock appeals data
   const appeals = [
@@ -21,6 +24,9 @@ const AppealsOfficerDashboard = () => {
       submitted_date: '2025-10-20',
       deadline: '2025-11-10',
       priority: 'high',
+      description: 'We believe our Excellence score was calculated incorrectly. The indicator E201 (Teacher Qualifications) should have been scored higher based on our submitted evidence showing 90% qualified teachers, not the 85% shown in the evaluation.',
+      school_comments: 'Our records show 36 out of 40 teachers have full qualifications (90%), but the evaluation shows 34 out of 40 (85%). We have attached updated certification documents.',
+      evidence_files: ['teacher_certifications_2025.pdf', 'HR_records_oct_2025.xlsx'],
     },
     {
       id: 'APP-2025-002',
@@ -84,6 +90,11 @@ const AppealsOfficerDashboard = () => {
     return map[priority] || 'default';
   };
 
+  const handleReviewAppeal = (appeal) => {
+    setSelectedAppeal(appeal);
+    setShowReviewModal(true);
+  };
+
   const data = appeals.map(appeal => ({
     id: appeal.id,
     school_name: appeal.school_name,
@@ -100,7 +111,7 @@ const AppealsOfficerDashboard = () => {
     ),
     submitted_date: appeal.submitted_date,
     actions: (
-      <Button variant="outline" size="sm">
+      <Button variant="outline" size="sm" onClick={() => handleReviewAppeal(appeal)}>
         Review
       </Button>
     ),
@@ -206,7 +217,202 @@ const AppealsOfficerDashboard = () => {
         </div>
         <Table columns={columns} data={data} />
       </Card>
+
+      {/* Review Appeal Modal */}
+      {selectedAppeal && (
+        <AppealReviewModal
+          isOpen={showReviewModal}
+          onClose={() => {
+            setShowReviewModal(false);
+            setSelectedAppeal(null);
+          }}
+          appeal={selectedAppeal}
+        />
+      )}
     </div>
+  );
+};
+
+// Appeal Review Modal
+const AppealReviewModal = ({ isOpen, onClose, appeal }) => {
+  const [decision, setDecision] = useState('');
+  const [officerComments, setOfficerComments] = useState('');
+
+  const handleSubmitDecision = (e) => {
+    e.preventDefault();
+    alert(`Appeal ${appeal.id} ${decision}!\nComments: ${officerComments}`);
+    onClose();
+    setDecision('');
+    setOfficerComments('');
+  };
+
+  const getStatusVariant = (status) => {
+    const map = {
+      pending: 'warning',
+      under_review: 'primary',
+      approved: 'success',
+      rejected: 'danger',
+    };
+    return map[status] || 'default';
+  };
+
+  const getPriorityVariant = (priority) => {
+    const map = { high: 'danger', medium: 'warning', low: 'default' };
+    return map[priority] || 'default';
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title="Review Appeal" size="xl">
+      <div className="space-y-6">
+        {/* Appeal Summary */}
+        <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+          <div>
+            <p className="text-sm text-gray-600">Appeal ID</p>
+            <p className="font-semibold text-gray-900">{appeal.id}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-600">School</p>
+            <p className="font-semibold text-gray-900">{appeal.school_name}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-600">Type</p>
+            <p className="font-semibold text-gray-900">{appeal.appeal_type}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-600">Status</p>
+            <Badge variant={getStatusVariant(appeal.status)}>
+              {appeal.status.replace(/_/g, ' ')}
+            </Badge>
+          </div>
+          <div>
+            <p className="text-sm text-gray-600">Priority</p>
+            <Badge variant={getPriorityVariant(appeal.priority)}>
+              {appeal.priority}
+            </Badge>
+          </div>
+          <div>
+            <p className="text-sm text-gray-600">Submitted</p>
+            <p className="font-semibold text-gray-900">{appeal.submitted_date}</p>
+          </div>
+        </div>
+
+        {/* Appeal Details */}
+        <div>
+          <h3 className="font-semibold text-gray-900 mb-2">Appeal Description</h3>
+          <p className="text-gray-700 text-sm leading-relaxed">
+            {appeal.description || 'No description provided.'}
+          </p>
+        </div>
+
+        {/* School Comments */}
+        {appeal.school_comments && (
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-2">School's Comments</h3>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <p className="text-sm text-blue-900">{appeal.school_comments}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Evidence Files */}
+        {appeal.evidence_files && appeal.evidence_files.length > 0 && (
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-2">Evidence Attached</h3>
+            <div className="space-y-2">
+              {appeal.evidence_files.map((file, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-2 p-2 bg-gray-50 rounded border border-gray-200"
+                >
+                  <FileText className="w-4 h-4 text-gray-600" />
+                  <span className="text-sm text-gray-700">{file}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Decision Form */}
+        <form onSubmit={handleSubmitDecision} className="border-t border-gray-200 pt-4">
+          <h3 className="font-semibold text-gray-900 mb-4">Make Decision</h3>
+
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Decision *
+              </label>
+              <div className="flex gap-3">
+                <label className="flex-1">
+                  <input
+                    type="radio"
+                    name="decision"
+                    value="approved"
+                    checked={decision === 'approved'}
+                    onChange={(e) => setDecision(e.target.value)}
+                    className="sr-only"
+                    required
+                  />
+                  <div
+                    className={`p-3 border-2 rounded-lg text-center cursor-pointer transition-colors ${
+                      decision === 'approved'
+                        ? 'border-success-500 bg-success-50 text-success-700'
+                        : 'border-gray-200 hover:border-success-300'
+                    }`}
+                  >
+                    <CheckCircle className="w-5 h-5 mx-auto mb-1" />
+                    <span className="text-sm font-medium">Approve</span>
+                  </div>
+                </label>
+                <label className="flex-1">
+                  <input
+                    type="radio"
+                    name="decision"
+                    value="rejected"
+                    checked={decision === 'rejected'}
+                    onChange={(e) => setDecision(e.target.value)}
+                    className="sr-only"
+                    required
+                  />
+                  <div
+                    className={`p-3 border-2 rounded-lg text-center cursor-pointer transition-colors ${
+                      decision === 'rejected'
+                        ? 'border-danger-500 bg-danger-50 text-danger-700'
+                        : 'border-gray-200 hover:border-danger-300'
+                    }`}
+                  >
+                    <XCircle className="w-5 h-5 mx-auto mb-1" />
+                    <span className="text-sm font-medium">Reject</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Officer's Comments *
+              </label>
+              <textarea
+                value={officerComments}
+                onChange={(e) => setOfficerComments(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                rows="4"
+                placeholder="Provide reasoning for your decision..."
+                required
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-3 mt-6">
+            <Button variant="outline" onClick={onClose} type="button">
+              Cancel
+            </Button>
+            <Button variant="primary" type="submit">
+              Submit Decision
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Modal>
   );
 };
 
