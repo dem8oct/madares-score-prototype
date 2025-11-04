@@ -12,7 +12,7 @@ const RoleSelector = () => {
     { value: 'ops_reviewer', icon: '✅', description: 'Review and approve submissions' },
     { value: 'committee_member', icon: '👔', description: 'Manage indicators and weights' },
     { value: 'appeals_officer', icon: '⚖️', description: 'Handle school appeals' },
-    { value: 'national_viewer', icon: '📊', description: 'View national statistics' },
+    { value: 'national_viewer', icon: '📊', description: 'Master Dashboard - View all system statistics' },
     { value: 'public', icon: '🌐', description: 'Browse public school scores' },
   ];
 
