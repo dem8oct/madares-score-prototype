@@ -20,6 +20,7 @@ import RankingsPage from './pages/School/RankingsPage';
 // Committee pages - both versions
 import CommitteeDashboard from './pages/Committee';
 import CommitteeMemberDashboard from './pages/CommitteeMember';
+import QuestionsBank from './pages/Committee/QuestionsBank';
 // Inspector pages
 import InspectorDashboardPage from './pages/Inspector/InspectorDashboardPage';
 import InspectionDetailPage from './pages/Inspector/InspectionDetailPage';
@@ -91,6 +92,7 @@ function AppRoutes() {
             <>
               <Route path="/" element={<Navigate to="/committee" replace />} />
               <Route path="/committee" element={<CommitteeMemberDashboard />} />
+              <Route path="/committee/questions-bank" element={<QuestionsBank />} />
               <Route path="/committee-legacy" element={<CommitteeDashboard />} />
               <Route path="*" element={<Navigate to="/committee" replace />} />
             </>

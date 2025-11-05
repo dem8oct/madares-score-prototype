@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
@@ -6,26 +7,37 @@ import Button from '../../components/common/Button';
 import Table from '../../components/common/Table';
 import Modal from '../../components/common/Modal';
 import Input from '../../components/common/Input';
-import { Award, Settings, TrendingUp, AlertCircle, Plus } from 'lucide-react';
+import { Award, Settings, TrendingUp, AlertCircle, Plus, Library } from 'lucide-react';
 import { mockIndicators, mockDomains, mockGradeBands } from '../../data/mockData';
 import IndicatorsTabEnhanced from '../../components/committee/indicators/IndicatorsTabEnhanced';
 import { indicatorsWithStatus } from '../../data/indicatorsWithStatus';
+import AddIndicatorModal from '../../components/committee/indicators/AddIndicatorModal';
 
 const CommitteeMemberDashboard = () => {
   const { language, t } = useLanguage();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('indicators');
   const [showNewIndicatorModal, setShowNewIndicatorModal] = useState(false);
 
   return (
     <div className="max-w-7xl mx-auto p-6">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Committee Member Dashboard
-        </h1>
-        <p className="text-gray-600">
-          Manage evaluation indicators, weights, and scoring criteria
-        </p>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Committee Member Dashboard
+          </h1>
+          <p className="text-gray-600">
+            Manage evaluation indicators, weights, and scoring criteria
+          </p>
+        </div>
+        <Button
+          variant="primary"
+          leftIcon={<Library className="w-5 h-5" />}
+          onClick={() => navigate('/committee/questions-bank')}
+        >
+          Questions Bank
+        </Button>
       </div>
 
       {/* Stats Cards */}
@@ -119,7 +131,7 @@ const CommitteeMemberDashboard = () => {
       {activeTab === 'grades' && <GradeBandsTab />}
 
       {/* New Indicator Modal */}
-      <NewIndicatorModal
+      <AddIndicatorModal
         isOpen={showNewIndicatorModal}
         onClose={() => setShowNewIndicatorModal(false)}
       />
@@ -238,203 +250,6 @@ const GradeBandsTab = () => {
         ))}
       </div>
     </Card>
-  );
-};
-
-// New Indicator Modal
-const NewIndicatorModal = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    code: '',
-    name: '',
-    name_ar: '',
-    domain: 'Excellence',
-    indicator_type: '',
-    score_type: '',
-    weight: '',
-    data_source: '',
-    description: '',
-  });
-
-  const indicatorTypeDescriptions = {
-    Manual: 'Data entry by evaluators or schools. Requires manual input and verification.',
-    Automatic: 'Data automatically collected from other sources (APIs, integrated systems, etc.). No manual entry required.',
-  };
-
-  const scoreTypeDescriptions = {
-    Binary: 'Yes/No or Pass/Fail scoring. Results in either 0 or 100 points. Example: Valid license (Yes=100, No=0)',
-    Numeric: 'Continuous numeric values converted to percentage. Example: Student-teacher ratio, attendance rate (calculated as percentage)',
-    Gradual: 'Multi-level scale scoring with defined thresholds. Example: 5-point scale (Excellent=100, Very Good=85, Good=70, Fair=55, Poor=40)',
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // In real app, would save to backend
-    alert('New indicator proposal submitted for review!');
-    onClose();
-    setFormData({
-      code: '',
-      name: '',
-      name_ar: '',
-      domain: 'Excellence',
-      indicator_type: '',
-      score_type: '',
-      weight: '',
-      data_source: '',
-      description: '',
-    });
-  };
-
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Propose New Indicator"
-      size="lg"
-    >
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            label="Indicator Code"
-            value={formData.code}
-            onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-            placeholder="E301"
-            required
-          />
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Domain *
-            </label>
-            <select
-              value={formData.domain}
-              onChange={(e) => setFormData({ ...formData, domain: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-              required
-            >
-              <option value="Excellence">Excellence</option>
-              <option value="Satisfaction">Satisfaction</option>
-              <option value="Compliance">Compliance</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Indicator Type *
-            </label>
-            <select
-              value={formData.indicator_type}
-              onChange={(e) => setFormData({ ...formData, indicator_type: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-              required
-            >
-              <option value="">Select type...</option>
-              <option value="Manual">Manual (M)</option>
-              <option value="Automatic">Automatic (A)</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Score Type *
-            </label>
-            <select
-              value={formData.score_type}
-              onChange={(e) => setFormData({ ...formData, score_type: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-              required
-            >
-              <option value="">Select scoring method...</option>
-              <option value="Binary">Binary</option>
-              <option value="Numeric">Numeric</option>
-              <option value="Gradual">Gradual</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Indicator Type Description */}
-        {formData.indicator_type && (
-          <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-sm font-medium text-purple-900 mb-1">
-              {formData.indicator_type} Indicator:
-            </p>
-            <p className="text-xs text-purple-800">
-              {indicatorTypeDescriptions[formData.indicator_type]}
-            </p>
-          </div>
-        )}
-
-        {/* Score Type Description */}
-        {formData.score_type && (
-          <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm font-medium text-blue-900 mb-1">
-              {formData.score_type} Scoring:
-            </p>
-            <p className="text-xs text-blue-800">
-              {scoreTypeDescriptions[formData.score_type]}
-            </p>
-          </div>
-        )}
-
-        <Input
-          label="Indicator Name (English)"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder="Teacher Professional Development Hours"
-          required
-        />
-
-        <Input
-          label="Indicator Name (Arabic)"
-          value={formData.name_ar}
-          onChange={(e) => setFormData({ ...formData, name_ar: e.target.value })}
-          placeholder="ساعات التطوير المهني للمعلمين"
-          required
-        />
-
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            label="Weight"
-            type="number"
-            value={formData.weight}
-            onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-            placeholder="5"
-            min="1"
-            max="10"
-            required
-          />
-          <Input
-            label="Data Source"
-            value={formData.data_source}
-            onChange={(e) => setFormData({ ...formData, data_source: e.target.value })}
-            placeholder="Noor System"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Description / Justification
-          </label>
-          <textarea
-            value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-            rows="4"
-            placeholder="Explain why this indicator should be added and how it will be measured..."
-            required
-          />
-        </div>
-
-        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-          <Button variant="outline" onClick={onClose} type="button">
-            Cancel
-          </Button>
-          <Button variant="primary" type="submit">
-            Submit Proposal
-          </Button>
-        </div>
-      </form>
-    </Modal>
   );
 };
 
