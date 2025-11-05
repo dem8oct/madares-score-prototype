@@ -16,9 +16,13 @@ import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
 // School pages - both legacy and new
 import SchoolAdminDashboard from './pages/SchoolAdmin';
 import SchoolEvaluationPage from './pages/SchoolPortal/SchoolEvaluationPage';
+import RankingsPage from './pages/School/RankingsPage';
 // Committee pages - both versions
 import CommitteeDashboard from './pages/Committee';
 import CommitteeMemberDashboard from './pages/CommitteeMember';
+// Inspector pages
+import InspectorDashboardPage from './pages/Inspector/InspectorDashboardPage';
+import InspectionDetailPage from './pages/Inspector/InspectionDetailPage';
 // Appeals pages - both versions
 import AppealsDashboard from './pages/Appeals';
 import AppealsOfficerDashboard from './pages/AppealsOfficer';
@@ -64,10 +68,21 @@ function AppRoutes() {
           {/* School Admin Routes - Using new SchoolEvaluationPage */}
           {user?.role === 'school_admin' && (
             <>
-              <Route path="/" element={<Navigate to={`/school/${user.school_id}/evaluation`} replace />} />
+              <Route path="/" element={<Navigate to="/school" replace />} />
               <Route path="/school" element={<SchoolAdminDashboard />} />
               <Route path="/school/:schoolId/evaluation" element={<SchoolEvaluationPage />} />
-              <Route path="*" element={<Navigate to={`/school/${user.school_id}/evaluation`} replace />} />
+              <Route path="/school/rankings" element={<RankingsPage />} />
+              <Route path="*" element={<Navigate to="/school" replace />} />
+            </>
+          )}
+
+          {/* Inspector Routes */}
+          {user?.role === 'inspector' && (
+            <>
+              <Route path="/" element={<Navigate to="/inspector/dashboard" replace />} />
+              <Route path="/inspector/dashboard" element={<InspectorDashboardPage />} />
+              <Route path="/inspector/inspection/:assignmentId" element={<InspectionDetailPage />} />
+              <Route path="*" element={<Navigate to="/inspector/dashboard" replace />} />
             </>
           )}
 

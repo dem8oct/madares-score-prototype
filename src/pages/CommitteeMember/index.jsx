@@ -8,6 +8,8 @@ import Modal from '../../components/common/Modal';
 import Input from '../../components/common/Input';
 import { Award, Settings, TrendingUp, AlertCircle, Plus } from 'lucide-react';
 import { mockIndicators, mockDomains, mockGradeBands } from '../../data/mockData';
+import IndicatorsTabEnhanced from '../../components/committee/indicators/IndicatorsTabEnhanced';
+import { indicatorsWithStatus } from '../../data/indicatorsWithStatus';
 
 const CommitteeMemberDashboard = () => {
   const { language, t } = useLanguage();
@@ -112,7 +114,7 @@ const CommitteeMemberDashboard = () => {
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'indicators' && <IndicatorsTab onOpenModal={() => setShowNewIndicatorModal(true)} />}
+      {activeTab === 'indicators' && <IndicatorsTabEnhanced onOpenModal={() => setShowNewIndicatorModal(true)} />}
       {activeTab === 'domains' && <DomainsTab />}
       {activeTab === 'grades' && <GradeBandsTab />}
 

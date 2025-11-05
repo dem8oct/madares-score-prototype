@@ -3,11 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useEvaluation } from '../../context/EvaluationContext';
 import { mockSchools } from '../../data/mockData';
+import { schoolDashboardKPI } from '../../data/schoolDashboardKPI';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 import ProgressBar from '../../components/common/ProgressBar';
 import { FileText, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import {
+  OverallScoreCard,
+  PendingItemsCard,
+  DeadlineCountdownCard,
+  CompletionProgressCard,
+  StatusCard
+} from '../../components/school/dashboard';
+import RankingsSection from '../../components/school/rankings/RankingsSection';
 
 const SchoolAdminDashboard = () => {
   const navigate = useNavigate();
@@ -17,6 +26,9 @@ const SchoolAdminDashboard = () => {
   // Find school and evaluation
   const school = mockSchools.find(s => s.id === user?.school_id);
   const evaluation = school?.current_evaluation_id ? getEvaluation(school.current_evaluation_id) : null;
+
+  // Get KPI data
+  const kpiData = schoolDashboardKPI;
 
   const getStatusIcon = (status) => {
     if (status === 'approved') return <CheckCircle className="w-5 h-5 text-success-600" />;
@@ -39,8 +51,30 @@ const SchoolAdminDashboard = () => {
         {/* Page Header */}
         <div>
           <h1 className="text-2xl font-bold text-gray-900">School Admin Dashboard</h1>
-          <p className="text-gray-600 mt-1">Manage your school's evaluation</p>
+          <p className="text-gray-600 mt-1">{school?.name || 'Manage your school\'s evaluation'}</p>
         </div>
+
+        {/* KPI Cards Section */}
+        {evaluation && (
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Key Metrics</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              <OverallScoreCard data={kpiData.overall_score} />
+              <PendingItemsCard
+                data={kpiData.pending_items}
+                onViewDetails={() => navigate('/school/evaluation')}
+              />
+              <DeadlineCountdownCard data={kpiData.deadline} />
+              <CompletionProgressCard data={kpiData.completion_progress} />
+              <StatusCard data={kpiData.evaluation_status} />
+            </div>
+          </div>
+        )}
+
+        {/* Rankings Section */}
+        {school?.published_score && (
+          <RankingsSection />
+        )}
 
         {/* School Information */}
         {school && (
