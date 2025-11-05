@@ -2,7 +2,7 @@ import React from 'react';
 import { Trophy, TrendingUp, TrendingDown } from 'lucide-react';
 import KPICard from './KPICard';
 
-const OverallScoreCard = ({ data }) => {
+const OverallScoreCard = ({ data, onViewScorecard }) => {
   const {
     current_score,
     current_grade,
@@ -43,7 +43,10 @@ const OverallScoreCard = ({ data }) => {
         </div>
 
         {/* Action Button */}
-        <button className="w-full mt-2 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
+        <button
+          onClick={onViewScorecard}
+          className="w-full mt-2 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+        >
           View Scorecard
         </button>
       </div>

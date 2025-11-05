@@ -56,6 +56,17 @@
       "role": "national_viewer",
       "email": "khalid.director@moe.sa",
       "phone": "+966 50 678 9012"
+    },
+    {
+      "id": "user007",
+      "username": "omar.inspector",
+      "name": "Omar Al-Rashid",
+      "name_ar": "عمر الراشد",
+      "role": "inspector",
+      "email": "omar.inspector@moe.sa",
+      "region": "Riyadh",
+      "inspector_id": "INS-2025-001",
+      "phone": "+966 50 789 0123"
     }
   ]
 }

@@ -59,10 +59,13 @@ const SchoolAdminDashboard = () => {
           <div>
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Key Metrics</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <OverallScoreCard data={kpiData.overall_score} />
+              <OverallScoreCard
+                data={kpiData.overall_score}
+                onViewScorecard={() => navigate(`/school/${user.school_id}/evaluation`)}
+              />
               <PendingItemsCard
                 data={kpiData.pending_items}
-                onViewDetails={() => navigate('/school/evaluation')}
+                onViewDetails={() => navigate(`/school/${user.school_id}/evaluation`)}
               />
               <DeadlineCountdownCard data={kpiData.deadline} />
               <CompletionProgressCard data={kpiData.completion_progress} />
@@ -161,7 +164,7 @@ const SchoolAdminDashboard = () => {
                 </p>
                 <Button
                   variant="primary"
-                  onClick={() => navigate('/school/evaluation')}
+                  onClick={() => navigate(`/school/${user.school_id}/evaluation`)}
                   disabled={evaluation.status === 'submitted' || evaluation.status === 'approved'}
                 >
                   {evaluation.status === 'in_progress' && 'Continue'}
