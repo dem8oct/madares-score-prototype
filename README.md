@@ -120,6 +120,45 @@ The prototype demonstrates 6 user personas:
 - **React Router 6.28** - Routing
 - **Lucide React** - Icons
 
+## Deployment
+
+### Production Deployment to Hetzner VPS
+
+Complete deployment scripts and documentation are available in the `/deployment` folder.
+
+**Quick deployment:**
+
+```bash
+# 1. Initial server setup (first time only)
+sudo ./deployment/initial-setup.sh
+
+# 2. Configure DNS (point your domain to server IP)
+
+# 3. Setup SSL certificate
+sudo ./deployment/setup-ssl.sh
+
+# 4. Deploy updates (after initial setup)
+./deployment/deploy.sh
+```
+
+**What you need:**
+- Hetzner VPS (Ubuntu 22.04 LTS recommended)
+- Custom domain with DNS access
+- SSH access to server
+
+**What you get:**
+- Nginx web server with HTTP/2
+- Free SSL certificate from Let's Encrypt
+- Automatic certificate renewal
+- Optimized static file caching
+- Firewall configuration
+- Automated deployment workflow
+
+📚 **Full deployment guide:** [`deployment/DEPLOYMENT.md`](./deployment/DEPLOYMENT.md)
+🚀 **Quick reference:** [`deployment/README.md`](./deployment/README.md)
+
+**Total deployment time:** 20-55 minutes (first time), 3-5 minutes (updates)
+
 ## License
 
 Prototype for Saudi Ministry of Education - Internal use only
