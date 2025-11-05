@@ -17,10 +17,12 @@ import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
 import SchoolAdminDashboard from './pages/SchoolAdmin';
 import SchoolEvaluationPage from './pages/SchoolPortal/SchoolEvaluationPage';
 import RankingsPage from './pages/School/RankingsPage';
+import EvaluationHistory from './pages/School/EvaluationHistory';
 // Committee pages - both versions
 import CommitteeDashboard from './pages/Committee';
 import CommitteeMemberDashboard from './pages/CommitteeMember';
 import QuestionsBank from './pages/Committee/QuestionsBank';
+import IndicatorReviewPage from './pages/Committee/IndicatorReviewPage';
 // Inspector pages
 import InspectorDashboardPage from './pages/Inspector/InspectorDashboardPage';
 import InspectionDetailPage from './pages/Inspector/InspectionDetailPage';
@@ -73,6 +75,7 @@ function AppRoutes() {
               <Route path="/school" element={<SchoolAdminDashboard />} />
               <Route path="/school/:schoolId/evaluation" element={<SchoolEvaluationPage />} />
               <Route path="/school/rankings" element={<RankingsPage />} />
+              <Route path="/school/evaluation-history" element={<EvaluationHistory />} />
               <Route path="*" element={<Navigate to="/school" replace />} />
             </>
           )}
@@ -93,6 +96,7 @@ function AppRoutes() {
               <Route path="/" element={<Navigate to="/committee" replace />} />
               <Route path="/committee" element={<CommitteeMemberDashboard />} />
               <Route path="/committee/questions-bank" element={<QuestionsBank />} />
+              <Route path="/committee/indicator/:code/review" element={<IndicatorReviewPage />} />
               <Route path="/committee-legacy" element={<CommitteeDashboard />} />
               <Route path="*" element={<Navigate to="/committee" replace />} />
             </>
