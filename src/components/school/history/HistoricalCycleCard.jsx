@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '../../common/Card';
 import Badge from '../../common/Badge';
 import Button from '../../common/Button';
-import { ChevronDown, ChevronRight, Download, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { ChevronDown, ChevronRight, Download, Eye, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 const HistoricalCycleCard = ({ cycle, onCompare }) => {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const formatDate = (dateString) => {
@@ -60,6 +62,17 @@ const HistoricalCycleCard = ({ cycle, onCompare }) => {
         </div>
 
         <div className="flex items-center gap-2">
+          <Button
+            variant="primary"
+            size="sm"
+            leftIcon={<Eye className="w-4 h-4" />}
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/school/scorecard/${cycle.cycle_id}`);
+            }}
+          >
+            View Scorecard
+          </Button>
           {cycle.status === 'Approved' && (
             <>
               <Button

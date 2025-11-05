@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/common/Button';
-import { FileDown, ArrowLeft } from 'lucide-react';
+import Badge from '../../components/common/Badge';
+import Table from '../../components/common/Table';
+import { FileDown, ArrowLeft, LayoutList, LayoutGrid, Eye } from 'lucide-react';
 import HistoricalCycleCard from '../../components/school/history/HistoricalCycleCard';
 import HistoricalTrendChart from '../../components/school/history/HistoricalTrendChart';
 import Card from '../../components/common/Card';
@@ -9,6 +11,7 @@ import { evaluationHistory, historicalTrendData, filterEvaluationHistory } from 
 
 const EvaluationHistory = () => {
   const navigate = useNavigate();
+  const [viewMode, setViewMode] = useState('table'); // 'table' or 'cards'
   const [filters, setFilters] = useState({
     year: 'All',
     domain: 'All',
@@ -20,6 +23,113 @@ const EvaluationHistory = () => {
   const handleCompare = (cycle) => {
     navigate(`/school/evaluation-history/compare?cycle=${cycle.cycle_id}`);
   };
+
+  const handleViewScorecard = (cycleId) => {
+    navigate(`/school/scorecard/${cycleId}`);
+  };
+
+  const getGradeVariant = (grade) => {
+    if (grade === 'A+' || grade === 'A') return 'success';
+    if (grade === 'B+' || grade === 'B') return 'primary';
+    if (grade === 'C+' || grade === 'C') return 'warning';
+    return 'danger';
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  // Table columns
+  const tableColumns = [
+    {
+      key: 'cycle_name',
+      label: 'Cycle',
+      sortable: true,
+      render: (value, row) => (
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-gray-900">{value}</span>
+          {row.is_current && (
+            <Badge variant="primary" size="sm">Current</Badge>
+          )}
+        </div>
+      )
+    },
+    {
+      key: 'period',
+      label: 'Period',
+      sortable: false
+    },
+    {
+      key: 'overall_score',
+      label: 'Score',
+      sortable: true,
+      render: (value) => (
+        <span className="font-semibold text-gray-900">{value}%</span>
+      )
+    },
+    {
+      key: 'grade',
+      label: 'Grade',
+      sortable: true,
+      render: (value) => (
+        <Badge variant={getGradeVariant(value)} size="lg">{value}</Badge>
+      )
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      sortable: true,
+      render: (value) => (
+        <Badge variant={value === 'Approved' ? 'success' : 'danger'}>
+          {value}
+        </Badge>
+      )
+    },
+    {
+      key: 'submitted_date',
+      label: 'Submitted',
+      sortable: true,
+      render: (value) => formatDate(value)
+    },
+    {
+      key: 'approved_date',
+      label: 'Approved',
+      sortable: true,
+      render: (value) => formatDate(value)
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      sortable: false,
+      render: (_, row) => (
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            leftIcon={<Eye className="w-4 h-4" />}
+            onClick={() => handleViewScorecard(row.cycle_id)}
+          >
+            View
+          </Button>
+          {row.status === 'Approved' && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleCompare(row)}
+            >
+              Compare
+            </Button>
+          )}
+        </div>
+      )
+    }
+  ];
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -135,31 +245,53 @@ const EvaluationHistory = () => {
         <HistoricalTrendChart trendData={historicalTrendData} />
       </Card>
 
-      {/* Results Count */}
-      <div className="mb-4">
+      {/* Results Count and View Toggle */}
+      <div className="mb-4 flex items-center justify-between">
         <p className="text-sm text-gray-600">
           Evaluation Cycles ({filteredCycles.length} total):
         </p>
+        <div className="flex items-center gap-2">
+          <Button
+            variant={viewMode === 'table' ? 'primary' : 'outline'}
+            size="sm"
+            leftIcon={<LayoutList className="w-4 h-4" />}
+            onClick={() => setViewMode('table')}
+          >
+            Table
+          </Button>
+          <Button
+            variant={viewMode === 'cards' ? 'primary' : 'outline'}
+            size="sm"
+            leftIcon={<LayoutGrid className="w-4 h-4" />}
+            onClick={() => setViewMode('cards')}
+          >
+            Cards
+          </Button>
+        </div>
       </div>
 
-      {/* Evaluation Cycles */}
-      <div className="space-y-4">
-        {filteredCycles.length === 0 ? (
-          <Card>
-            <div className="text-center py-12">
-              <p className="text-gray-500">No evaluation cycles found matching your filters.</p>
-            </div>
-          </Card>
-        ) : (
-          filteredCycles.map((cycle) => (
+      {/* Evaluation Cycles - Table or Cards View */}
+      {filteredCycles.length === 0 ? (
+        <Card>
+          <div className="text-center py-12">
+            <p className="text-gray-500">No evaluation cycles found matching your filters.</p>
+          </div>
+        </Card>
+      ) : viewMode === 'table' ? (
+        <Card>
+          <Table columns={tableColumns} data={filteredCycles} />
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          {filteredCycles.map((cycle) => (
             <HistoricalCycleCard
               key={cycle.cycle_id}
               cycle={cycle}
               onCompare={handleCompare}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Export Button at Bottom */}
       <div className="mt-6 flex justify-center gap-3">

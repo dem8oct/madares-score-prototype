@@ -8,7 +8,7 @@ import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 import ProgressBar from '../../components/common/ProgressBar';
-import { FileText, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { FileText, AlertCircle, CheckCircle, Clock, History } from 'lucide-react';
 import {
   OverallScoreCard,
   PendingItemsCard,
@@ -49,9 +49,18 @@ const SchoolAdminDashboard = () => {
     <div className="container mx-auto px-4 py-6">
       <div className="space-y-6">
         {/* Page Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">School Admin Dashboard</h1>
-          <p className="text-gray-600 mt-1">{school?.name || 'Manage your school\'s evaluation'}</p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">School Admin Dashboard</h1>
+            <p className="text-gray-600 mt-1">{school?.name || 'Manage your school\'s evaluation'}</p>
+          </div>
+          <Button
+            variant="outline"
+            leftIcon={<History className="w-5 h-5" />}
+            onClick={() => navigate('/school/evaluation-history')}
+          >
+            Evaluation History
+          </Button>
         </div>
 
         {/* KPI Cards Section */}
@@ -61,7 +70,7 @@ const SchoolAdminDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               <OverallScoreCard
                 data={kpiData.overall_score}
-                onViewScorecard={() => navigate(`/school/${user.school_id}/evaluation`)}
+                onViewScorecard={() => navigate('/school/scorecard/eval_2025_q4')}
               />
               <PendingItemsCard
                 data={kpiData.pending_items}

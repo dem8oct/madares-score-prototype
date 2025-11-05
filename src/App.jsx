@@ -18,6 +18,7 @@ import SchoolAdminDashboard from './pages/SchoolAdmin';
 import SchoolEvaluationPage from './pages/SchoolPortal/SchoolEvaluationPage';
 import RankingsPage from './pages/School/RankingsPage';
 import EvaluationHistory from './pages/School/EvaluationHistory';
+import Scorecard from './pages/School/Scorecard';
 // Committee pages - both versions
 import CommitteeDashboard from './pages/Committee';
 import CommitteeMemberDashboard from './pages/CommitteeMember';
@@ -76,6 +77,7 @@ function AppRoutes() {
               <Route path="/school/:schoolId/evaluation" element={<SchoolEvaluationPage />} />
               <Route path="/school/rankings" element={<RankingsPage />} />
               <Route path="/school/evaluation-history" element={<EvaluationHistory />} />
+              <Route path="/school/scorecard/:cycleId" element={<Scorecard />} />
               <Route path="*" element={<Navigate to="/school" replace />} />
             </>
           )}

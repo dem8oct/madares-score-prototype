@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Plus, Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Plus, Search, ExternalLink } from 'lucide-react';
 import Card from '../../common/Card';
 import Button from '../../common/Button';
 import Table from '../../common/Table';
@@ -8,6 +9,7 @@ import DisableIndicatorModal from './DisableIndicatorModal';
 import { indicatorsWithStatus } from '../../../data/indicatorsWithStatus';
 
 const IndicatorsTabEnhanced = ({ onOpenModal }) => {
+  const navigate = useNavigate();
   const [indicators, setIndicators] = useState(indicatorsWithStatus);
   const [filterStatus, setFilterStatus] = useState('all'); // 'all', 'Active', 'Disabled'
   const [searchTerm, setSearchTerm] = useState('');
@@ -72,9 +74,15 @@ const IndicatorsTabEnhanced = ({ onOpenModal }) => {
       label: 'Code',
       sortable: true,
       render: (value, row) => (
-        <span className={row.status === 'Disabled' ? 'text-gray-400 line-through' : 'font-medium text-gray-900'}>
+        <button
+          onClick={() => navigate(`/committee/indicator/${value}/review`)}
+          className={`font-medium hover:underline flex items-center gap-1 ${
+            row.status === 'Disabled' ? 'text-gray-400 line-through' : 'text-primary-600 hover:text-primary-700'
+          }`}
+        >
           {value}
-        </span>
+          <ExternalLink className="w-3 h-3" />
+        </button>
       )
     },
     {
