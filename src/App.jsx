@@ -13,10 +13,19 @@ import ComponentDemo from './pages/ComponentDemo';
 // Role-specific pages
 import OpsReviewerDashboard from './pages/OpsReviewer';
 import EvaluationReviewPage from './pages/OpsReviewer/EvaluationReviewPage';
+// School pages - both legacy and new
 import SchoolAdminDashboard from './pages/SchoolAdmin';
+import SchoolEvaluationPage from './pages/SchoolPortal/SchoolEvaluationPage';
+// Committee pages - both versions
 import CommitteeDashboard from './pages/Committee';
+import CommitteeMemberDashboard from './pages/CommitteeMember';
+// Appeals pages - both versions
 import AppealsDashboard from './pages/Appeals';
+import AppealsOfficerDashboard from './pages/AppealsOfficer';
+// National/Master dashboards
 import MasterDashboard from './pages/Master';
+import NationalViewerDashboard from './pages/NationalViewer';
+// Public portal
 import PublicPortal from './pages/Public';
 
 function AppRoutes() {
@@ -42,15 +51,6 @@ function AppRoutes() {
       <Header />
       <main>
         <Routes>
-          {/* School Admin Routes */}
-          {user?.role === 'school_admin' && (
-            <>
-              <Route path="/" element={<Navigate to="/school" replace />} />
-              <Route path="/school" element={<SchoolAdminDashboard />} />
-              <Route path="*" element={<Navigate to="/school" replace />} />
-            </>
-          )}
-
           {/* Operations Reviewer Routes */}
           {user?.role === 'ops_reviewer' && (
             <>
@@ -61,29 +61,42 @@ function AppRoutes() {
             </>
           )}
 
-          {/* Committee Member Routes */}
+          {/* School Admin Routes - Using new SchoolEvaluationPage */}
+          {user?.role === 'school_admin' && (
+            <>
+              <Route path="/" element={<Navigate to={`/school/${user.school_id}/evaluation`} replace />} />
+              <Route path="/school" element={<SchoolAdminDashboard />} />
+              <Route path="/school/:schoolId/evaluation" element={<SchoolEvaluationPage />} />
+              <Route path="*" element={<Navigate to={`/school/${user.school_id}/evaluation`} replace />} />
+            </>
+          )}
+
+          {/* Committee Member Routes - Using new CommitteeMemberDashboard */}
           {user?.role === 'committee_member' && (
             <>
               <Route path="/" element={<Navigate to="/committee" replace />} />
-              <Route path="/committee" element={<CommitteeDashboard />} />
+              <Route path="/committee" element={<CommitteeMemberDashboard />} />
+              <Route path="/committee-legacy" element={<CommitteeDashboard />} />
               <Route path="*" element={<Navigate to="/committee" replace />} />
             </>
           )}
 
-          {/* Appeals Officer Routes */}
+          {/* Appeals Officer Routes - Using new AppealsOfficerDashboard */}
           {user?.role === 'appeals_officer' && (
             <>
               <Route path="/" element={<Navigate to="/appeals" replace />} />
-              <Route path="/appeals" element={<AppealsDashboard />} />
+              <Route path="/appeals" element={<AppealsOfficerDashboard />} />
+              <Route path="/appeals-legacy" element={<AppealsDashboard />} />
               <Route path="*" element={<Navigate to="/appeals" replace />} />
             </>
           )}
 
-          {/* National Viewer/Master Dashboard Routes */}
+          {/* National Viewer Routes - Using both dashboards */}
           {user?.role === 'national_viewer' && (
             <>
               <Route path="/" element={<Navigate to="/master" replace />} />
               <Route path="/master" element={<MasterDashboard />} />
+              <Route path="/national" element={<NationalViewerDashboard />} />
               <Route path="*" element={<Navigate to="/master" replace />} />
             </>
           )}
