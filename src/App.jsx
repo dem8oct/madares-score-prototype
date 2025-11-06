@@ -33,6 +33,9 @@ import AppealsOfficerDashboard from './pages/AppealsOfficer';
 // National/Master dashboards
 import MasterDashboard from './pages/Master';
 import NationalViewerDashboard from './pages/NationalViewer';
+// Executive pages
+import ExecutiveDashboard from './pages/Executive/Dashboard';
+import InteractiveMap from './pages/Executive/Map';
 // Public portal
 import PublicPortal from './pages/Public';
 
@@ -121,6 +124,17 @@ function AppRoutes() {
               <Route path="/master" element={<MasterDashboard />} />
               <Route path="/national" element={<NationalViewerDashboard />} />
               <Route path="*" element={<Navigate to="/master" replace />} />
+            </>
+          )}
+
+          {/* Executive Routes */}
+          {user?.role === 'executive' && (
+            <>
+              <Route path="/" element={<Navigate to="/executive/dashboard" replace />} />
+              <Route path="/executive" element={<Navigate to="/executive/dashboard" replace />} />
+              <Route path="/executive/dashboard" element={<ExecutiveDashboard />} />
+              <Route path="/executive/map" element={<InteractiveMap />} />
+              <Route path="*" element={<Navigate to="/executive/dashboard" replace />} />
             </>
           )}
 

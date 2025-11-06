@@ -67,6 +67,17 @@
       "region": "Riyadh",
       "inspector_id": "INS-2025-001",
       "phone": "+966 50 789 0123"
+    },
+    {
+      "id": "user008",
+      "username": "dr.abdullah",
+      "name": "Dr. Abdullah Al-Faisal",
+      "name_ar": "د. عبدالله الفيصل",
+      "role": "executive",
+      "email": "abdullah.exec@moe.sa",
+      "title": "Executive Director",
+      "department": "Strategic Performance",
+      "phone": "+966 50 890 1234"
     }
   ]
 }

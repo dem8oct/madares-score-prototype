@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
-import { Globe, User, LogOut, Building2, ClipboardCheck, Settings, Scale, BarChart3 } from 'lucide-react';
+import { Globe, User, LogOut, Building2, ClipboardCheck, Settings, Scale, BarChart3, TrendingUp, Map } from 'lucide-react';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -105,6 +105,34 @@ const Header = () => {
                   <Scale className="w-4 h-4" />
                   Appeals Dashboard
                 </Link>
+              )}
+
+              {/* Executive Navigation */}
+              {user?.role === 'executive' && (
+                <>
+                  <Link
+                    to="/executive/dashboard"
+                    className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
+                      isActivePath('/executive/dashboard')
+                        ? 'bg-primary-50 text-primary-700'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    <TrendingUp className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/executive/map"
+                    className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
+                      isActivePath('/executive/map')
+                        ? 'bg-primary-50 text-primary-700'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    <Map className="w-4 h-4" />
+                    Interactive Map
+                  </Link>
+                </>
               )}
 
               {/* National Viewer Navigation */}

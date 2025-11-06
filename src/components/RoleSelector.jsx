@@ -12,6 +12,8 @@ const RoleSelector = () => {
     { value: 'ops_reviewer', icon: '✅', description: 'Review and approve submissions' },
     { value: 'committee_member', icon: '👔', description: 'Manage indicators and weights' },
     { value: 'appeals_officer', icon: '⚖️', description: 'Handle school appeals' },
+    { value: 'inspector', icon: '🔍', description: 'Conduct school inspections and verify indicators' },
+    { value: 'executive', icon: '📈', description: 'Executive Intelligence Dashboard & Performance Analytics' },
     { value: 'national_viewer', icon: '📊', description: 'Master Dashboard - View all system statistics' },
     { value: 'public', icon: '🌐', description: 'Browse public school scores' },
   ];
