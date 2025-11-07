@@ -1,15 +1,21 @@
 import React, { useState, useMemo } from 'react';
-import { X, CheckCircle, XCircle, AlertTriangle, Calendar } from 'lucide-react';
+import { X, CheckCircle, XCircle, AlertTriangle, Calendar, ChevronRight } from 'lucide-react';
 import Button from '../common/Button';
 import Card from '../common/Card';
 import Badge from '../common/Badge';
+import { indicatorsWithStatus } from '../../data/indicatorsWithStatus';
 
 const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateRequests }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedIndicators, setSelectedIndicators] = useState([]);
   const [selectedSchools, setSelectedSchools] = useState([]);
   const [deadline, setDeadline] = useState('');
 
-  // Step 1 filters
+  // Step 1: Indicator selection state
+  const [selectedDomain, setSelectedDomain] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // Step 2 filters (school selection)
   const [filters, setFilters] = useState({
     region: 'all',
     city: 'all',
@@ -17,7 +23,28 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
     gender_model: 'all',
   });
 
-  // Filter schools for Step 1
+  // Step 1: Get unique domains and categories
+  const domains = useMemo(() => {
+    return [...new Set(indicatorsWithStatus.filter(ind => ind.status === 'Active').map(ind => ind.domain))];
+  }, []);
+
+  const categoriesForDomain = useMemo(() => {
+    if (!selectedDomain) return [];
+    return [...new Set(indicatorsWithStatus
+      .filter(ind => ind.status === 'Active' && ind.domain === selectedDomain)
+      .map(ind => ind.sub_category))];
+  }, [selectedDomain]);
+
+  const indicatorsForCategory = useMemo(() => {
+    if (!selectedDomain || !selectedCategory) return [];
+    return indicatorsWithStatus.filter(
+      ind => ind.status === 'Active' &&
+             ind.domain === selectedDomain &&
+             ind.sub_category === selectedCategory
+    );
+  }, [selectedDomain, selectedCategory]);
+
+  // Step 2: Filter schools
   const filteredSchools = useMemo(() => {
     return schools.filter(school => {
       if (filters.region !== 'all' && school.region !== filters.region) return false;
@@ -69,8 +96,17 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
     }
   };
 
+  const handleSelectIndicator = (indicator) => {
+    const isSelected = selectedIndicators.find(ind => ind.indicator_code === indicator.indicator_code);
+    if (isSelected) {
+      setSelectedIndicators(selectedIndicators.filter(ind => ind.indicator_code !== indicator.indicator_code));
+    } else {
+      setSelectedIndicators([...selectedIndicators, indicator]);
+    }
+  };
+
   const handleNext = () => {
-    if (currentStep < 4) setCurrentStep(currentStep + 1);
+    if (currentStep < 5) setCurrentStep(currentStep + 1);
   };
 
   const handleBack = () => {
@@ -79,21 +115,25 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
 
   const handleCreate = () => {
     const { readySchools } = schoolsAnalysis;
-    onCreateRequests(readySchools, deadline);
+    onCreateRequests(readySchools, deadline, selectedIndicators);
     handleClose();
   };
 
   const handleClose = () => {
     setCurrentStep(1);
+    setSelectedIndicators([]);
+    setSelectedDomain(null);
+    setSelectedCategory(null);
     setSelectedSchools([]);
     setDeadline('');
     setFilters({ region: 'all', city: 'all', level: 'all', gender_model: 'all' });
     onClose();
   };
 
-  const canProceedFromStep1 = selectedSchools.length > 0;
-  const canProceedFromStep2 = schoolsAnalysis.readySchools.length > 0;
-  const canProceedFromStep3 = deadline !== '';
+  const canProceedFromStep1 = selectedIndicators.length > 0;
+  const canProceedFromStep2 = selectedSchools.length > 0;
+  const canProceedFromStep3 = schoolsAnalysis.readySchools.length > 0;
+  const canProceedFromStep4 = deadline !== '';
 
   if (!isOpen) return null;
 
@@ -118,8 +158,8 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
 
         {/* Progress Indicator */}
         <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-          <div className="flex items-center justify-between max-w-2xl mx-auto">
-            {[1, 2, 3, 4].map((step, idx) => (
+          <div className="flex items-center justify-between max-w-3xl mx-auto">
+            {[1, 2, 3, 4, 5].map((step, idx) => (
               <React.Fragment key={step}>
                 <div className="flex flex-col items-center">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
@@ -129,14 +169,14 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
                   }`}>
                     {step}
                   </div>
-                  <span className={`text-xs mt-1 ${
+                  <span className={`text-xs mt-1 whitespace-nowrap ${
                     step === currentStep ? 'text-primary-600 font-semibold' : 'text-gray-500'
                   }`}>
-                    {step === 1 ? 'Select' : step === 2 ? 'Review' : step === 3 ? 'Deadline' : 'Confirm'}
+                    {step === 1 ? 'Indicators' : step === 2 ? 'Schools' : step === 3 ? 'Review' : step === 4 ? 'Deadline' : 'Confirm'}
                   </span>
                 </div>
-                {idx < 3 && (
-                  <div className={`flex-1 h-1 mx-4 ${
+                {idx < 4 && (
+                  <div className={`flex-1 h-1 mx-2 ${
                     step < currentStep ? 'bg-primary-600' : 'bg-gray-300'
                   }`} />
                 )}
@@ -147,8 +187,126 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
 
         {/* Step Content */}
         <div className="flex-1 overflow-y-auto p-6">
-          {/* Step 1: Select Schools */}
+          {/* Step 1: Select Indicators */}
           {currentStep === 1 && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">Select Indicators</h3>
+              <p className="text-sm text-gray-600">
+                Choose evaluation indicators hierarchically: Domain → Category → Indicators
+              </p>
+
+              {/* Domain Selection */}
+              <Card padding="default">
+                <h4 className="text-sm font-semibold text-gray-900 mb-3">Step 1: Select Domain</h4>
+                <div className="grid grid-cols-1 gap-2">
+                  {domains.map((domain) => (
+                    <button
+                      key={domain}
+                      onClick={() => {
+                        setSelectedDomain(domain);
+                        setSelectedCategory(null);
+                      }}
+                      className={`p-4 border-2 rounded-lg text-left transition-colors ${
+                        selectedDomain === domain
+                          ? 'border-primary-500 bg-primary-50'
+                          : 'border-gray-200 hover:border-primary-200'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-gray-900">{domain}</span>
+                        {selectedDomain === domain && <ChevronRight className="w-5 h-5 text-primary-600" />}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </Card>
+
+              {/* Category Selection */}
+              {selectedDomain && (
+                <Card padding="default">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-3">Step 2: Select Category in {selectedDomain}</h4>
+                  <div className="grid grid-cols-1 gap-2">
+                    {categoriesForDomain.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setSelectedCategory(category)}
+                        className={`p-4 border-2 rounded-lg text-left transition-colors ${
+                          selectedCategory === category
+                            ? 'border-primary-500 bg-primary-50'
+                            : 'border-gray-200 hover:border-primary-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium text-gray-900">{category}</span>
+                          {selectedCategory === category && <ChevronRight className="w-5 h-5 text-primary-600" />}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </Card>
+              )}
+
+              {/* Indicator Selection */}
+              {selectedDomain && selectedCategory && (
+                <Card padding="default">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                    Step 3: Select Indicators in {selectedCategory}
+                  </h4>
+                  <div className="space-y-2">
+                    {indicatorsForCategory.map((indicator) => {
+                      const isSelected = selectedIndicators.find(ind => ind.indicator_code === indicator.indicator_code);
+                      return (
+                        <div
+                          key={indicator.indicator_code}
+                          onClick={() => handleSelectIndicator(indicator)}
+                          className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                            isSelected
+                              ? 'border-success-500 bg-success-50'
+                              : 'border-gray-200 hover:border-success-200'
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <input
+                              type="checkbox"
+                              checked={!!isSelected}
+                              onChange={() => {}}
+                              className="mt-1 rounded border-gray-300 text-primary-600"
+                            />
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-mono text-sm text-gray-600">{indicator.indicator_code}</span>
+                                <Badge variant="primary" size="sm">Weight: {indicator.weight}</Badge>
+                              </div>
+                              <p className="text-sm font-medium text-gray-900">{indicator.indicator_name}</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Card>
+              )}
+
+              {/* Selected Indicators Summary */}
+              {selectedIndicators.length > 0 && (
+                <Card padding="default" className="bg-primary-50 border-2 border-primary-200">
+                  <h4 className="text-sm font-semibold text-primary-900 mb-3">
+                    Selected Indicators ({selectedIndicators.length})
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedIndicators.map((ind) => (
+                      <Badge key={ind.indicator_code} variant="primary">
+                        {ind.indicator_code}
+                      </Badge>
+                    ))}
+                  </div>
+                </Card>
+              )}
+            </div>
+          )}
+
+          {/* Step 2: Select Schools */}
+          {currentStep === 2 && (
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">Select Schools</h3>
 
@@ -243,8 +401,8 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
             </div>
           )}
 
-          {/* Step 2: Review Selected Schools */}
-          {currentStep === 2 && (
+          {/* Step 3: Review Selected Schools */}
+          {currentStep === 3 && (
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">Review Selected Schools</h3>
 
@@ -315,8 +473,8 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
             </div>
           )}
 
-          {/* Step 3: Set Deadline */}
-          {currentStep === 3 && (
+          {/* Step 4: Set Deadline */}
+          {currentStep === 4 && (
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">Set Deadline</h3>
 
@@ -343,14 +501,18 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
             </div>
           )}
 
-          {/* Step 4: Confirm Creation */}
-          {currentStep === 4 && (
+          {/* Step 5: Confirm Creation */}
+          {currentStep === 5 && (
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">Confirm Creation</h3>
 
               <Card padding="default" className="bg-primary-50 border-2 border-primary-200">
                 <h4 className="font-semibold text-primary-900 mb-3">Summary</h4>
                 <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-700">Selected Indicators:</span>
+                    <span className="font-semibold text-gray-900">{selectedIndicators.length}</span>
+                  </div>
                   <div className="flex justify-between">
                     <span className="text-gray-700">Schools to Process:</span>
                     <span className="font-semibold text-gray-900">{schoolsAnalysis.readySchools.length}</span>
@@ -367,6 +529,21 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
                   )}
                 </div>
               </Card>
+
+              {/* Selected Indicators List */}
+              {selectedIndicators.length > 0 && (
+                <Card padding="default">
+                  <h4 className="font-semibold text-gray-900 mb-3">Indicators to Evaluate</h4>
+                  <div className="grid grid-cols-1 gap-2">
+                    {selectedIndicators.map((ind) => (
+                      <div key={ind.indicator_code} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <Badge variant="primary">{ind.indicator_code}</Badge>
+                        <span className="text-sm text-gray-900">{ind.indicator_name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              )}
 
               <Card padding="default">
                 <p className="text-sm text-gray-700 mb-2">
@@ -395,20 +572,21 @@ const CreateRequestModal = ({ isOpen, onClose, schools, evaluations, onCreateReq
             )}
           </div>
           <div>
-            {currentStep < 4 && (
+            {currentStep < 5 && (
               <Button
                 variant="primary"
                 onClick={handleNext}
                 disabled={
                   (currentStep === 1 && !canProceedFromStep1) ||
                   (currentStep === 2 && !canProceedFromStep2) ||
-                  (currentStep === 3 && !canProceedFromStep3)
+                  (currentStep === 3 && !canProceedFromStep3) ||
+                  (currentStep === 4 && !canProceedFromStep4)
                 }
               >
                 Next
               </Button>
             )}
-            {currentStep === 4 && (
+            {currentStep === 5 && (
               <Button
                 variant="success"
                 onClick={handleCreate}
