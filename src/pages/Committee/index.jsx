@@ -23,6 +23,7 @@ const CommitteeDashboard = () => {
   const [showDisableModal, setShowDisableModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showImpactModal, setShowImpactModal] = useState(false);
+  const [showConfigureDomainModal, setShowConfigureDomainModal] = useState(false);
 
   // Form data
   const [proposalData, setProposalData] = useState({
@@ -47,6 +48,13 @@ const CommitteeDashboard = () => {
 
   const [selectedIndicator, setSelectedIndicator] = useState(null);
   const [rejectReason, setRejectReason] = useState('');
+  const [selectedDomain, setSelectedDomain] = useState(null);
+  const [domainEditData, setDomainEditData] = useState({
+    name: '',
+    name_ar: '',
+    weight: 0,
+    description: ''
+  });
 
   // Mock pending changes
   const [pendingChanges] = useState([
@@ -96,6 +104,30 @@ const CommitteeDashboard = () => {
       prev.map(d => d.id === domainId ? { ...d, weight: newWeight / 100 } : d)
     );
     success('Domain weight updated');
+  };
+
+  const handleConfigureDomain = (domain) => {
+    setSelectedDomain(domain);
+    setDomainEditData({
+      name: domain.name,
+      name_ar: domain.name_ar || '',
+      weight: Math.round(domain.weight * 100),
+      description: domain.description
+    });
+    setShowConfigureDomainModal(true);
+  };
+
+  const confirmDomainEdit = () => {
+    setDomains(prev =>
+      prev.map(d =>
+        d.id === selectedDomain.id
+          ? { ...d, name: domainEditData.name, name_ar: domainEditData.name_ar, weight: domainEditData.weight / 100, description: domainEditData.description }
+          : d
+      )
+    );
+    success(`Domain "${domainEditData.name}" updated successfully`);
+    setShowConfigureDomainModal(false);
+    setSelectedDomain(null);
   };
 
   const handleProposeIndicator = () => {
@@ -200,12 +232,21 @@ const CommitteeDashboard = () => {
           </p>
           <div className="space-y-6">
             {domains.map(domain => (
-              <div key={domain.id}>
+              <div key={domain.id} className="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <label className="font-medium text-gray-900">{domain.name}</label>
-                  <span className="text-lg font-bold text-primary-600">
-                    {Math.round(domain.weight * 100)}%
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg font-bold text-primary-600">
+                      {Math.round(domain.weight * 100)}%
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleConfigureDomain(domain)}
+                    >
+                      Configure
+                    </Button>
+                  </div>
                 </div>
                 <input
                   type="range"
@@ -1013,6 +1054,100 @@ const CommitteeDashboard = () => {
                   <li>• Mid-tier schools benefit most from this change</li>
                 </ul>
               </Card>
+            </div>
+          )}
+        </Modal>
+
+        {/* Configure Domain Modal */}
+        <Modal
+          isOpen={showConfigureDomainModal}
+          onClose={() => setShowConfigureDomainModal(false)}
+          title="Configure Domain"
+          size="md"
+        >
+          {selectedDomain && (
+            <div className="space-y-4">
+              <p className="text-sm text-gray-600">
+                Edit domain properties and settings.
+              </p>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Domain Name (English)
+                </label>
+                <input
+                  type="text"
+                  value={domainEditData.name}
+                  onChange={(e) => setDomainEditData({ ...domainEditData, name: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  placeholder="e.g., Compliance"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Domain Name (Arabic)
+                </label>
+                <input
+                  type="text"
+                  value={domainEditData.name_ar}
+                  onChange={(e) => setDomainEditData({ ...domainEditData, name_ar: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  placeholder="e.g., الامتثال"
+                  dir="rtl"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Domain Weight: <span className="text-primary-600 font-bold">{domainEditData.weight}%</span>
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={domainEditData.weight}
+                  onChange={(e) => setDomainEditData({ ...domainEditData, weight: parseInt(e.target.value) })}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Adjust the weight this domain contributes to the overall score
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Description
+                </label>
+                <textarea
+                  value={domainEditData.description}
+                  onChange={(e) => setDomainEditData({ ...domainEditData, description: e.target.value })}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  placeholder="Brief description of this domain..."
+                />
+              </div>
+
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-sm text-blue-900">
+                  <strong>Note:</strong> Changes to domain configuration will affect how evaluations are calculated.
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowConfigureDomainModal(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={confirmDomainEdit}
+                >
+                  Save Changes
+                </Button>
+              </div>
             </div>
           )}
         </Modal>
