@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Modal from '../../common/Modal';
 import Button from '../../common/Button';
 import Input from '../../common/Input';
-import { getCategoriesForDomain } from '../../../data/questionsBank';
+import { getCategoriesForDomain, getIndicatorsFromQuestions } from '../../../data/questionsBank';
+import { indicatorsWithStatus } from '../../../data/indicatorsWithStatus';
 
 const fieldTypeOptions = [
   'Text Input',
@@ -20,6 +21,7 @@ const AddQuestionModal = ({ isOpen, onClose, onQuestionAdded }) => {
   const [formData, setFormData] = useState({
     domain: 'Compliance',
     category: 'Health & Safety',
+    indicator_code: '',
     question_en: '',
     question_ar: '',
     field_types: [],
@@ -74,6 +76,7 @@ const AddQuestionModal = ({ isOpen, onClose, onQuestionAdded }) => {
     const newQuestion = {
       question_id: questionCode,
       question_code: questionCode,
+      indicator_code: formData.indicator_code,
       domain: formData.domain,
       category: formData.category,
       question_text: {
@@ -89,7 +92,7 @@ const AddQuestionModal = ({ isOpen, onClose, onQuestionAdded }) => {
         ar: formData.helper_text
       },
       usage_statistics: {
-        used_in_indicators: 0,
+        used_in_indicators: formData.indicator_code ? 1 : 0,
         total_responses: 0,
         last_used: null
       },
@@ -121,6 +124,7 @@ const AddQuestionModal = ({ isOpen, onClose, onQuestionAdded }) => {
     setFormData({
       domain: 'Compliance',
       category: 'Health & Safety',
+      indicator_code: '',
       question_en: '',
       question_ar: '',
       field_types: [],
@@ -173,6 +177,31 @@ const AddQuestionModal = ({ isOpen, onClose, onQuestionAdded }) => {
                 ))}
             </select>
           </div>
+        </div>
+
+        {/* Linked Indicator */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Linked Indicator <span className="text-gray-500">(Optional)</span>
+          </label>
+          <select
+            value={formData.indicator_code}
+            onChange={(e) => handleChange('indicator_code', e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+          >
+            <option value="">None - Not linked to any indicator</option>
+            {indicatorsWithStatus
+              .filter(ind => ind.status === 'Active')
+              .sort((a, b) => a.indicator_code.localeCompare(b.indicator_code))
+              .map(ind => (
+                <option key={ind.indicator_code} value={ind.indicator_code}>
+                  {ind.indicator_code} - {ind.indicator_name}
+                </option>
+              ))}
+          </select>
+          <p className="mt-1 text-xs text-gray-500">
+            Link this question to a specific indicator. Each question can be linked to only one indicator.
+          </p>
         </div>
 
         {/* Question Text (English) */}

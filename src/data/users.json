@@ -78,6 +78,71 @@
       "title": "Executive Director",
       "department": "Strategic Performance",
       "phone": "+966 50 890 1234"
+    },
+    {
+      "id": "user009",
+      "username": "layla.inspector",
+      "name": "Layla Al-Qahtani",
+      "name_ar": "ليلى القحطاني",
+      "role": "inspector",
+      "email": "layla.inspector@moe.sa",
+      "region": "Jeddah",
+      "inspector_id": "INS-2025-002",
+      "specialization": ["Safety", "Infrastructure"],
+      "phone": "+966 50 901 2345"
+    },
+    {
+      "id": "user010",
+      "username": "mohammed.inspector",
+      "name": "Mohammed Al-Shehri",
+      "name_ar": "محمد الشهري",
+      "role": "inspector",
+      "email": "mohammed.inspector@moe.sa",
+      "region": "Eastern",
+      "inspector_id": "INS-2025-003",
+      "specialization": ["Teaching Quality", "Academic Achievement"],
+      "phone": "+966 50 012 3456"
+    },
+    {
+      "id": "user011",
+      "username": "aisha.ops",
+      "name": "Aisha Al-Mutairi",
+      "name_ar": "عائشة المطيري",
+      "role": "ops_reviewer",
+      "email": "aisha.reviewer@moe.sa",
+      "region": "Makkah",
+      "phone": "+966 50 123 4567"
+    },
+    {
+      "id": "user012",
+      "username": "youssef.school",
+      "name": "Youssef Al-Harbi",
+      "name_ar": "يوسف الحربي",
+      "role": "school_admin",
+      "email": "youssef@alfaisal-girls.edu.sa",
+      "school_id": "SCH-2025-003",
+      "phone": "+966 50 234 5678"
+    },
+    {
+      "id": "user013",
+      "username": "noura.committee",
+      "name": "Dr. Noura Al-Saud",
+      "name_ar": "د. نورة آل سعود",
+      "role": "committee_member",
+      "email": "noura.committee@moe.sa",
+      "phone": "+966 50 345 6789"
+    },
+    {
+      "id": "user014",
+      "username": "hassan.inspector",
+      "name": "Hassan Al-Otaibi",
+      "name_ar": "حسن العتيبي",
+      "role": "inspector",
+      "email": "hassan.inspector@moe.sa",
+      "region": "Riyadh",
+      "inspector_id": "INS-2025-004",
+      "specialization": ["Facilities", "Technology"],
+      "phone": "+966 50 456 7890"
     }
   ]
 }

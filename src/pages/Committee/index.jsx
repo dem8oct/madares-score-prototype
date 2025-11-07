@@ -15,6 +15,7 @@ const CommitteeDashboard = () => {
   const [domains, setDomains] = useState(mockDomains);
   const [indicators, setIndicators] = useState(mockIndicators);
   const [activeTab, setActiveTab] = useState('indicators'); // 'indicators' or 'pending'
+  const [domainFilter, setDomainFilter] = useState('All');
 
   // Modals
   const [showProposeModal, setShowProposeModal] = useState(false);
@@ -256,6 +257,32 @@ const CommitteeDashboard = () => {
         {/* Indicators Matrix Tab */}
         {activeTab === 'indicators' && (
           <Card title="Evaluation Indicators" padding="none">
+            {/* Filter Section */}
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <div className="flex items-center gap-4">
+                <label className="text-sm font-medium text-gray-700">Filter by Domain:</label>
+                <select
+                  value={domainFilter}
+                  onChange={(e) => setDomainFilter(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                >
+                  <option value="All">All Domains</option>
+                  <option value="Compliance">Compliance</option>
+                  <option value="Excellence">Institutional Excellence</option>
+                  <option value="Satisfaction">Beneficiary Satisfaction</option>
+                </select>
+                {domainFilter !== 'All' && (
+                  <button
+                    onClick={() => setDomainFilter('All')}
+                    className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1"
+                  >
+                    <X className="w-4 h-4" />
+                    Clear filter
+                  </button>
+                )}
+              </div>
+            </div>
+
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -270,7 +297,9 @@ const CommitteeDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {indicators.map((indicator) => {
+                  {indicators
+                    .filter(indicator => domainFilter === 'All' || indicator.domain === domainFilter)
+                    .map((indicator) => {
                     const isDisabled = indicator.status === 'disabled';
                     return (
                       <tr

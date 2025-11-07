@@ -95,7 +95,7 @@ function AppRoutes() {
             </>
           )}
 
-          {/* Committee Member Routes - Using new CommitteeMemberDashboard */}
+          {/* Indicators Committee Member Routes */}
           {user?.role === 'committee_member' && (
             <>
               <Route path="/" element={<Navigate to="/committee" replace />} />
