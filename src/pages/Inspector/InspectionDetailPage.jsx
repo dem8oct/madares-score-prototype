@@ -4,6 +4,7 @@ import { ArrowLeft, Save, Send } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { inspectorAssignments, getAssignmentById } from '../../data/inspectorAssignments';
 import IndicatorInspectionCard from '../../components/inspector/IndicatorInspectionCard';
+import { getFirstName } from '../../utils/nameUtils';
 
 const InspectionDetailPage = () => {
   const { assignmentId } = useParams();
@@ -87,7 +88,10 @@ const InspectionDetailPage = () => {
                 Inspection: {assignment.school_name}
               </h1>
               <div className="mt-2 space-y-1 text-sm text-gray-600">
-                <p>Request ID: {assignment.request_id} | Inspector: {assignment.inspector_name}</p>
+                <p>
+                  Request ID: {assignment.request_id} | Inspector:{' '}
+                  <span title={assignment.inspector_name}>{getFirstName(assignment.inspector_name)}</span>
+                </p>
                 <p>Visit Date: {format(parseISO(assignment.scheduled_visit), 'MMMM dd, yyyy hh:mm a')}</p>
                 <p>Status: <span className="font-semibold">{assignment.status}</span></p>
               </div>

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { Globe, User, LogOut, Building2, ClipboardCheck, Settings, Scale, BarChart3, TrendingUp, Map } from 'lucide-react';
+import { getFirstName } from '../../utils/nameUtils';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -167,8 +168,8 @@ const Header = () => {
             {user && (
               <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
                 <div className="text-right">
-                  <p className="text-sm font-medium text-gray-900">
-                    {language === 'ar' ? user.name_ar : user.name}
+                  <p className="text-sm font-medium text-gray-900" title={language === 'ar' ? user.name_ar : user.name}>
+                    {language === 'ar' ? getFirstName(user.name_ar) : getFirstName(user.name)}
                   </p>
                   <p className="text-xs text-gray-500">
                     {t(`roles.${user.role}`)}

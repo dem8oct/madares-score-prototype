@@ -9,6 +9,7 @@ import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 import ActionDropdownMenu from '../../components/ops/ActionDropdownMenu';
 import CreateRequestModal from '../../components/ops/CreateRequestModal';
+import { getFirstName } from '../../utils/nameUtils';
 import {
   Search, Download, FileText, Clock, AlertCircle, TrendingUp,
   ChevronLeft, ChevronRight, Plus, MoreVertical, X
@@ -228,7 +229,7 @@ const EvaluationRequestsTable = () => {
         navigate(`/ops/evaluation/${evaluation.id}`);
         break;
       case 'assign_to_me':
-        success(`Assigned ${evaluation.school_name} to ${currentUser.name}`);
+        success(`Assigned ${evaluation.school_name} to ${getFirstName(currentUser.name)}`);
         // In real app: update evaluation.assigned_reviewer
         break;
       case 'view_history':
@@ -578,8 +579,8 @@ const EvaluationRequestsTable = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {evaluation.assigned_reviewer ? (
-                        <span className="text-sm font-medium text-gray-900">
-                          {evaluation.assigned_reviewer === 'user003' ? 'Ahmed Al-Rashid' : 'Sarah Al-Qahtani'}
+                        <span className="text-sm font-medium text-gray-900" title={evaluation.assigned_reviewer === 'user003' ? 'Ahmed Al-Rashid' : 'Sarah Al-Qahtani'}>
+                          {evaluation.assigned_reviewer === 'user003' ? 'Ahmed' : 'Sarah'}
                         </span>
                       ) : (
                         <span className="text-sm text-gray-500 italic">Unassigned</span>

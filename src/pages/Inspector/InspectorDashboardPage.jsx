@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { inspectorAssignments } from '../../data/inspectorAssignments';
 import InspectionSummaryCards from '../../components/inspector/InspectionSummaryCards';
 import AssignmentCard from '../../components/inspector/AssignmentCard';
+import { getFirstName } from '../../utils/nameUtils';
 
 const InspectorDashboardPage = () => {
   const [assignments] = useState(inspectorAssignments);
@@ -24,7 +25,9 @@ const InspectorDashboardPage = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Inspector Dashboard</h1>
-            <p className="text-gray-600 mt-1">Welcome, {inspectorInfo.name}</p>
+            <p className="text-gray-600 mt-1" title={inspectorInfo.name}>
+              Welcome, {getFirstName(inspectorInfo.name)}
+            </p>
           </div>
           <div className="text-right">
             <p className="text-sm text-gray-600">Inspector ID</p>
