@@ -3,6 +3,7 @@ export const questionsBank = [
   {
     question_id: "Q-C-001",
     question_code: "Q-C-001",
+    indicator_code: "C101",
     domain: "Compliance",
     category: "Health & Safety",
     question_text: {
@@ -18,7 +19,7 @@ export const questionsBank = [
       ar: "قم بتحميل ملف PDF للشهادة الأصلية. يجب أن تكون الشهادة سارية وغير منتهية الصلاحية."
     },
     usage_statistics: {
-      used_in_indicators: 23,
+      used_in_indicators: 1,
       total_responses: 1247,
       last_used: "2025-11-05T10:00:00Z"
     },
@@ -53,6 +54,7 @@ export const questionsBank = [
   {
     question_id: "Q-C-002",
     question_code: "Q-C-002",
+    indicator_code: "C102",
     domain: "Compliance",
     category: "Financial",
     question_text: {
@@ -96,6 +98,7 @@ export const questionsBank = [
   {
     question_id: "Q-C-003",
     question_code: "Q-C-003",
+    indicator_code: "C103",
     domain: "Compliance",
     category: "Health & Safety",
     question_text: {
@@ -139,6 +142,7 @@ export const questionsBank = [
   {
     question_id: "Q-EX-001",
     question_code: "Q-EX-001",
+    indicator_code: "EX201",
     domain: "Institutional Excellence",
     category: "Teaching Quality",
     question_text: {
@@ -189,6 +193,7 @@ export const questionsBank = [
   {
     question_id: "Q-EX-002",
     question_code: "Q-EX-002",
+    indicator_code: "EX202",
     domain: "Institutional Excellence",
     category: "Academic Achievement",
     question_text: {
@@ -239,6 +244,7 @@ export const questionsBank = [
   {
     question_id: "Q-EX-003",
     question_code: "Q-EX-003",
+    indicator_code: "EX203",
     domain: "Institutional Excellence",
     category: "Infrastructure",
     question_text: {
@@ -282,6 +288,7 @@ export const questionsBank = [
   {
     question_id: "Q-BS-001",
     question_code: "Q-BS-001",
+    indicator_code: "BS301",
     domain: "Beneficiary Satisfaction",
     category: "Parent Satisfaction",
     question_text: {
@@ -325,6 +332,7 @@ export const questionsBank = [
   {
     question_id: "Q-BS-002",
     question_code: "Q-BS-002",
+    indicator_code: "BS302",
     domain: "Beneficiary Satisfaction",
     category: "Safety & Security",
     question_text: {
@@ -368,6 +376,7 @@ export const questionsBank = [
   {
     question_id: "Q-C-004",
     question_code: "Q-C-004",
+    indicator_code: "C101",
     domain: "Compliance",
     category: "Licensing",
     question_text: {
@@ -411,6 +420,7 @@ export const questionsBank = [
   {
     question_id: "Q-EX-004",
     question_code: "Q-EX-004",
+    indicator_code: "EX204",
     domain: "Institutional Excellence",
     category: "Technology",
     question_text: {
@@ -450,6 +460,249 @@ export const questionsBank = [
     created_at: "2024-01-05T08:00:00Z",
     last_updated: "2025-09-01T14:00:00Z",
     last_updated_by: "Dr. Khalid"
+  },
+  {
+    question_id: "Q-C-005",
+    question_code: "Q-C-005",
+    indicator_code: "C102",
+    domain: "Compliance",
+    category: "Financial",
+    question_text: {
+      en: "Does your school maintain separate bank accounts for tuition fees and operational expenses as per MoE regulations?",
+      ar: "هل تحتفظ مدرستك بحسابات بنكية منفصلة للرسوم الدراسية والنفقات التشغيلية وفقًا لأنظمة وزارة التعليم؟"
+    },
+    field_type: "Yes/No Radio",
+    tags: ["financial-compliance", "banking", "regulations"],
+    status: "Active",
+    is_required: true,
+    helper_text: {
+      en: "Select 'Yes' if you maintain separate accounts as required by MoE financial regulations.",
+      ar: "اختر 'نعم' إذا كنت تحتفظ بحسابات منفصلة كما هو مطلوب بموجب الأنظمة المالية لوزارة التعليم."
+    },
+    usage_statistics: {
+      used_in_indicators: 1,
+      total_responses: 1247,
+      last_used: "2025-11-05T10:30:00Z"
+    },
+    version: "1.0",
+    version_history: [
+      {
+        version: "1.0",
+        date: "2024-01-05T08:00:00Z",
+        changed_by: "Committee Team",
+        changes: ["Initial question created"],
+        rationale: null
+      }
+    ],
+    created_at: "2024-01-05T08:00:00Z",
+    last_updated: "2024-01-05T08:00:00Z",
+    last_updated_by: "Committee Team"
+  },
+  {
+    question_id: "Q-C-006",
+    question_code: "Q-C-006",
+    indicator_code: "C103",
+    domain: "Compliance",
+    category: "Health & Safety",
+    question_text: {
+      en: "How many fire drills were conducted in the last academic year? Upload documentation of drill dates and participation rates.",
+      ar: "كم عدد تدريبات الحريق التي أجريت في العام الدراسي الماضي؟ قم بتحميل وثائق تواريخ التدريبات ومعدلات المشاركة."
+    },
+    field_type: "Number Input + File Upload",
+    tags: ["fire-drills", "emergency-preparedness", "safety"],
+    status: "Active",
+    is_required: true,
+    helper_text: {
+      en: "Enter the number of drills (minimum 2 per year required). Upload signed drill reports with dates and student/staff participation counts.",
+      ar: "أدخل عدد التدريبات (الحد الأدنى 2 في السنة مطلوب). قم بتحميل تقارير التدريبات الموقعة مع التواريخ وأعداد مشاركة الطلاب/الموظفين."
+    },
+    usage_statistics: {
+      used_in_indicators: 1,
+      total_responses: 1247,
+      last_used: "2025-11-04T14:20:00Z"
+    },
+    version: "1.2",
+    version_history: [
+      {
+        version: "1.2",
+        date: "2025-08-10T10:00:00Z",
+        changed_by: "Dr. Lina",
+        changes: ["Added requirement for participation rates in documentation"],
+        rationale: "Need to verify actual drill effectiveness, not just occurrence."
+      },
+      {
+        version: "1.0",
+        date: "2024-01-05T08:00:00Z",
+        changed_by: "Committee Team",
+        changes: ["Initial question created"],
+        rationale: null
+      }
+    ],
+    created_at: "2024-01-05T08:00:00Z",
+    last_updated: "2025-08-10T10:00:00Z",
+    last_updated_by: "Dr. Lina"
+  },
+  {
+    question_id: "Q-EX-005",
+    question_code: "Q-EX-005",
+    indicator_code: "EX201",
+    domain: "Institutional Excellence",
+    category: "Teaching Quality",
+    question_text: {
+      en: "What percentage of your teachers hold advanced degrees (Master's or PhD) in their subject area?",
+      ar: "ما هي النسبة المئوية للمعلمين الحاصلين على درجات علمية متقدمة (ماجستير أو دكتوراه) في مجال تخصصهم؟"
+    },
+    field_type: "Percentage Input",
+    tags: ["teacher-qualifications", "advanced-degrees", "quality"],
+    status: "Active",
+    is_required: false,
+    helper_text: {
+      en: "Enter the percentage (0-100). Include only degrees directly related to the subject being taught.",
+      ar: "أدخل النسبة المئوية (0-100). قم بتضمين الدرجات العلمية المتعلقة مباشرة بالمادة التي يتم تدريسها فقط."
+    },
+    usage_statistics: {
+      used_in_indicators: 1,
+      total_responses: 1247,
+      last_used: "2025-11-03T11:00:00Z"
+    },
+    version: "1.0",
+    version_history: [
+      {
+        version: "1.0",
+        date: "2024-01-05T08:00:00Z",
+        changed_by: "Committee Team",
+        changes: ["Initial question created"],
+        rationale: null
+      }
+    ],
+    created_at: "2024-01-05T08:00:00Z",
+    last_updated: "2024-01-05T08:00:00Z",
+    last_updated_by: "Committee Team"
+  },
+  {
+    question_id: "Q-EX-006",
+    question_code: "Q-EX-006",
+    indicator_code: "EX202",
+    domain: "Institutional Excellence",
+    category: "Academic Achievement",
+    question_text: {
+      en: "What is the graduation rate for your school in the last academic year? (Percentage of enrolled students who completed their program)",
+      ar: "ما هو معدل التخرج في مدرستك في العام الدراسي الماضي؟ (نسبة الطلاب المسجلين الذين أكملوا برنامجهم)"
+    },
+    field_type: "Percentage Input",
+    tags: ["graduation-rate", "academic-success", "student-retention"],
+    status: "Active",
+    is_required: true,
+    helper_text: {
+      en: "Enter the percentage (0-100) of students who successfully completed and graduated. Exclude transfers to other schools.",
+      ar: "أدخل النسبة المئوية (0-100) من الطلاب الذين أكملوا وتخرجوا بنجاح. استبعد المنتقلين إلى مدارس أخرى."
+    },
+    usage_statistics: {
+      used_in_indicators: 1,
+      total_responses: 1247,
+      last_used: "2025-11-05T09:15:00Z"
+    },
+    version: "1.1",
+    version_history: [
+      {
+        version: "1.1",
+        date: "2025-06-15T10:00:00Z",
+        changed_by: "Dr. Khalid",
+        changes: ["Clarified exclusion of transfers in calculation"],
+        rationale: "Standardize calculation methodology across schools."
+      },
+      {
+        version: "1.0",
+        date: "2024-01-05T08:00:00Z",
+        changed_by: "Committee Team",
+        changes: ["Initial question created"],
+        rationale: null
+      }
+    ],
+    created_at: "2024-01-05T08:00:00Z",
+    last_updated: "2025-06-15T10:00:00Z",
+    last_updated_by: "Dr. Khalid"
+  },
+  {
+    question_id: "Q-EX-007",
+    question_code: "Q-EX-007",
+    indicator_code: "EX203",
+    domain: "Institutional Excellence",
+    category: "Infrastructure",
+    question_text: {
+      en: "Does your school have a dedicated library with a minimum of 10 books per student?",
+      ar: "هل لدى مدرستك مكتبة مخصصة بحد أدنى 10 كتب لكل طالب؟"
+    },
+    field_type: "Yes/No Radio",
+    tags: ["library", "infrastructure", "learning-resources"],
+    status: "Active",
+    is_required: true,
+    helper_text: {
+      en: "Select 'Yes' if your library meets the minimum 10 books per student requirement. Digital books count toward this total.",
+      ar: "اختر 'نعم' إذا كانت مكتبتك تلبي الحد الأدنى من 10 كتب لكل طالب. تُحتسب الكتب الرقمية ضمن هذا المجموع."
+    },
+    usage_statistics: {
+      used_in_indicators: 1,
+      total_responses: 1247,
+      last_used: "2025-11-02T16:30:00Z"
+    },
+    version: "1.3",
+    version_history: [
+      {
+        version: "1.3",
+        date: "2025-09-20T10:00:00Z",
+        changed_by: "Dr. Lina",
+        changes: ["Added clarification that digital books count"],
+        rationale: "Reflect modern learning resources and digital transformation."
+      },
+      {
+        version: "1.0",
+        date: "2024-01-05T08:00:00Z",
+        changed_by: "Committee Team",
+        changes: ["Initial question created"],
+        rationale: null
+      }
+    ],
+    created_at: "2024-01-05T08:00:00Z",
+    last_updated: "2025-09-20T10:00:00Z",
+    last_updated_by: "Dr. Lina"
+  },
+  {
+    question_id: "Q-BS-003",
+    question_code: "Q-BS-003",
+    indicator_code: "BS301",
+    domain: "Beneficiary Satisfaction",
+    category: "Parent Satisfaction",
+    question_text: {
+      en: "What is the response rate for your annual parent satisfaction survey?",
+      ar: "ما هو معدل الاستجابة لاستطلاع رضا أولياء الأمور السنوي؟"
+    },
+    field_type: "Percentage Input",
+    tags: ["parent-engagement", "survey-participation", "feedback"],
+    status: "Active",
+    is_required: true,
+    helper_text: {
+      en: "Enter the percentage (0-100) of parents who responded to the survey. Minimum 50% response rate required for valid results.",
+      ar: "أدخل النسبة المئوية (0-100) من أولياء الأمور الذين استجابوا للاستطلاع. الحد الأدنى لمعدل الاستجابة 50٪ مطلوب للنتائج الصالحة."
+    },
+    usage_statistics: {
+      used_in_indicators: 1,
+      total_responses: 1247,
+      last_used: "2025-11-04T10:45:00Z"
+    },
+    version: "1.0",
+    version_history: [
+      {
+        version: "1.0",
+        date: "2024-01-05T08:00:00Z",
+        changed_by: "Committee Team",
+        changes: ["Initial question created"],
+        rationale: null
+      }
+    ],
+    created_at: "2024-01-05T08:00:00Z",
+    last_updated: "2024-01-05T08:00:00Z",
+    last_updated_by: "Committee Team"
   }
 ];
 
@@ -466,6 +719,9 @@ export const filterQuestions = (questions, filters) => {
       return false;
     }
     if (filters.status && filters.status !== 'Active' && question.status !== filters.status) {
+      return false;
+    }
+    if (filters.indicator && filters.indicator !== 'All' && question.indicator_code !== filters.indicator) {
       return false;
     }
     if (filters.searchTerm && filters.searchTerm.trim() !== '') {
@@ -494,4 +750,14 @@ export const getCategoriesForDomain = (domain) => {
 // Get all unique field types
 export const getFieldTypes = () => {
   return ['All', ...new Set(questionsBank.map(q => q.field_type))];
+};
+
+// Get questions by indicator code
+export const getQuestionsByIndicator = (indicatorCode) => {
+  return questionsBank.filter(q => q.indicator_code === indicatorCode);
+};
+
+// Get all unique indicators from questions
+export const getIndicatorsFromQuestions = () => {
+  return [...new Set(questionsBank.map(q => q.indicator_code))].filter(Boolean);
 };

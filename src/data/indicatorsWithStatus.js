@@ -287,6 +287,113 @@ export const indicatorsWithStatus = [
     created_at: "2024-01-05T08:00:00Z",
     last_modified: "2024-01-05T08:00:00Z",
     last_modified_by: "Committee Team"
+  },
+  {
+    indicator_code: "C104",
+    domain: "Compliance",
+    sub_category: "Licensing",
+    indicator_name: "Teacher Licensing Compliance",
+    weight: 5,
+    type: "M",
+    score_type: "B",
+    status: "Active",
+    usage_statistics: {
+      total_evaluations: 1247,
+      evaluation_cycles: "Q1 2024 - Q4 2024",
+      compliance_rate: 98.2
+    },
+    performance_distribution: {
+      compliant: 1225,
+      non_compliant: 22
+    },
+    created_at: "2024-01-05T08:00:00Z",
+    last_modified: "2024-01-05T08:00:00Z",
+    last_modified_by: "Committee Team"
+  },
+  {
+    indicator_code: "C105",
+    domain: "Compliance",
+    sub_category: "Health & Safety",
+    indicator_name: "Emergency Preparedness Training",
+    weight: 4,
+    type: "M",
+    score_type: "B",
+    status: "Active",
+    usage_statistics: {
+      total_evaluations: 1247,
+      evaluation_cycles: "Q1 2024 - Q4 2024",
+      compliance_rate: 88.7
+    },
+    performance_distribution: {
+      compliant: 1106,
+      non_compliant: 141
+    },
+    created_at: "2024-01-05T08:00:00Z",
+    last_modified: "2024-01-05T08:00:00Z",
+    last_modified_by: "Committee Team"
+  },
+  {
+    indicator_code: "EX206",
+    domain: "Institutional Excellence",
+    sub_category: "Infrastructure",
+    indicator_name: "Learning Resources Availability",
+    weight: 3,
+    type: "A",
+    score_type: "N",
+    status: "Active",
+    usage_statistics: {
+      total_evaluations: 371,
+      evaluation_cycles: "Q3 2024 - Q4 2024",
+      average_score_percentage: 80.5,
+      median_score: 82,
+      standard_deviation: 14.2
+    },
+    performance_distribution: {
+      "0-20": 15,
+      "20-40": 28,
+      "40-60": 67,
+      "60-80": 142,
+      "80-100": 119
+    },
+    change_history: [
+      {
+        date: "2025-08-01T10:00:00Z",
+        changed_by: "Dr. Lina",
+        change_type: "Created",
+        change_description: "New indicator to replace EX205",
+        rationale: "Updated formula and better data sources for modern infrastructure assessment."
+      }
+    ],
+    created_at: "2025-08-01T10:00:00Z",
+    last_modified: "2025-08-01T10:00:00Z",
+    last_modified_by: "Dr. Lina"
+  },
+  {
+    indicator_code: "BS303",
+    domain: "Beneficiary Satisfaction",
+    sub_category: "Student Engagement",
+    indicator_name: "Student Wellbeing Index",
+    weight: 3,
+    type: "A",
+    score_type: "N",
+    status: "Active",
+    usage_statistics: {
+      total_evaluations: 1247,
+      evaluation_cycles: "Q1 2024 - Q4 2024",
+      average_score_percentage: 82.4,
+      median_score: 84,
+      standard_deviation: 13.1
+    },
+    performance_distribution: {
+      "0-20": 18,
+      "20-40": 52,
+      "40-60": 112,
+      "60-80": 445,
+      "80-100": 620
+    },
+    created_at: "2024-01-05T08:00:00Z",
+    last_modified: "2024-01-05T08:00:00Z",
+    last_modified_by: "Committee Team"
   }
 ];
 

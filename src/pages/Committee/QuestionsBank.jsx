@@ -5,7 +5,7 @@ import { Plus, Search } from 'lucide-react';
 import QuestionCard from '../../components/committee/questions/QuestionCard';
 import QuestionHistoryModal from '../../components/committee/questions/QuestionHistoryModal';
 import AddQuestionModal from '../../components/committee/questions/AddQuestionModal';
-import { questionsBank, filterQuestions, getCategoriesForDomain, getFieldTypes } from '../../data/questionsBank';
+import { questionsBank, filterQuestions, getCategoriesForDomain, getFieldTypes, getIndicatorsFromQuestions } from '../../data/questionsBank';
 
 const QuestionsBank = () => {
   const [questions, setQuestions] = useState(questionsBank);
@@ -13,6 +13,7 @@ const QuestionsBank = () => {
     searchTerm: '',
     domain: 'All',
     category: 'All',
+    indicator: 'All',
     fieldType: 'All',
     status: 'Active'
   });
@@ -40,6 +41,7 @@ const QuestionsBank = () => {
       searchTerm: '',
       domain: 'All',
       category: 'All',
+      indicator: 'All',
       fieldType: 'All',
       status: 'Active'
     });
@@ -85,7 +87,7 @@ const QuestionsBank = () => {
         {/* Filters */}
         <div className="mb-4">
           <p className="text-sm font-medium text-gray-700 mb-3">Filters:</p>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             {/* Domain Filter */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -115,6 +117,23 @@ const QuestionsBank = () => {
               >
                 {availableCategories.map(cat => (
                   <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Indicator Filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Indicator
+              </label>
+              <select
+                value={filters.indicator}
+                onChange={(e) => handleFilterChange('indicator', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              >
+                <option value="All">All</option>
+                {getIndicatorsFromQuestions().sort().map(code => (
+                  <option key={code} value={code}>{code}</option>
                 ))}
               </select>
             </div>

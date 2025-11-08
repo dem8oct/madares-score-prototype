@@ -77,7 +77,7 @@ const Header = () => {
                 </div>
               )}
 
-              {/* Committee Member Navigation */}
+              {/* Indicators Committee Member Navigation */}
               {user?.role === 'committee_member' && (
                 <Link
                   to="/committee"
@@ -88,7 +88,7 @@ const Header = () => {
                   }`}
                 >
                   <Settings className="w-4 h-4" />
-                  Committee Dashboard
+                  Indicators Committee
                 </Link>
               )}
 

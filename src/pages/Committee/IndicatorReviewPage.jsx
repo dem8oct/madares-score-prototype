@@ -1,18 +1,75 @@
-import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Edit, Scale, XCircle, FileDown } from 'lucide-react';
+import React, { useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft, Edit, Scale, XCircle, FileDown, FileText, ExternalLink, AlertTriangle } from 'lucide-react';
 import Button from '../../components/common/Button';
 import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
+import Modal from '../../components/common/Modal';
 import PerformanceDistributionChart from '../../components/committee/indicators/PerformanceDistributionChart';
 import GradeDistributionChart from '../../components/committee/indicators/GradeDistributionChart';
 import { getIndicatorDetailedData } from '../../data/indicatorDetailedReview';
+import { getQuestionsByIndicator } from '../../data/questionsBank';
+import { useToast } from '../../context/ToastContext';
 
 const IndicatorReviewPage = () => {
   const { code } = useParams();
   const navigate = useNavigate();
+  const { success } = useToast();
 
   const indicator = getIndicatorDetailedData(code);
+  const relatedQuestions = getQuestionsByIndicator(code);
+
+  // Modal states
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showAdjustWeightModal, setShowAdjustWeightModal] = useState(false);
+  const [showDisableModal, setShowDisableModal] = useState(false);
+
+  // Form states
+  const [editData, setEditData] = useState({
+    name: indicator?.indicator_name || '',
+    sub_category: indicator?.sub_category || ''
+  });
+  const [newWeight, setNewWeight] = useState(indicator?.weight || 3);
+  const [disableReason, setDisableReason] = useState('');
+
+  // Handlers
+  const handleEditIndicator = () => {
+    setEditData({
+      name: indicator.indicator_name,
+      sub_category: indicator.sub_category
+    });
+    setShowEditModal(true);
+  };
+
+  const confirmEdit = () => {
+    success(`Indicator ${code} updated successfully`);
+    setShowEditModal(false);
+    // In a real app, this would update the indicator data
+  };
+
+  const handleAdjustWeight = () => {
+    setNewWeight(indicator.weight);
+    setShowAdjustWeightModal(true);
+  };
+
+  const confirmAdjustWeight = () => {
+    success(`Weight adjusted to ${newWeight} for indicator ${code}`);
+    setShowAdjustWeightModal(false);
+    // In a real app, this would update the indicator weight
+  };
+
+  const handleDisableIndicator = () => {
+    setDisableReason('');
+    setShowDisableModal(true);
+  };
+
+  const confirmDisable = () => {
+    if (disableReason.trim()) {
+      success(`Indicator ${code} disabled successfully`);
+      setShowDisableModal(false);
+      // In a real app, this would disable the indicator
+    }
+  };
 
   if (!indicator) {
     return (
@@ -255,17 +312,105 @@ const IndicatorReviewPage = () => {
         </Card>
       )}
 
+      {/* Related Questions */}
+      <Card className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">Related Questions</h2>
+          <Link
+            to="/committee/questions-bank"
+            className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-1"
+          >
+            View all questions
+            <ExternalLink className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {relatedQuestions.length > 0 ? (
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600 mb-3">
+              {relatedQuestions.length} question{relatedQuestions.length !== 1 ? 's' : ''} linked to this indicator:
+            </p>
+
+            {relatedQuestions.map((question) => (
+              <div key={question.question_id} className="border border-gray-200 rounded-lg p-4 hover:border-primary-300 hover:bg-primary-50/30 transition-colors">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1">
+                    <FileText className="w-5 h-5 text-primary-600" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-mono text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                            {question.question_code}
+                          </span>
+                          <Badge variant={question.status === 'Active' ? 'success' : 'default'} size="sm">
+                            {question.status}
+                          </Badge>
+                          {question.is_required && (
+                            <span className="text-xs text-danger-600 font-medium">Required</span>
+                          )}
+                        </div>
+                        <p className="text-sm font-medium text-gray-900">{question.question_text.en}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-xs text-gray-600 mt-2">
+                      <span className="flex items-center gap-1">
+                        <span className="font-medium">Category:</span> {question.category}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <span className="font-medium">Type:</span> {question.field_type}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <span className="font-medium">Responses:</span> {question.usage_statistics.total_responses.toLocaleString()}
+                      </span>
+                    </div>
+
+                    {question.tags && question.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {question.tags.slice(0, 3).map((tag, idx) => (
+                          <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
+                            #{tag}
+                          </span>
+                        ))}
+                        {question.tags.length > 3 && (
+                          <span className="text-xs text-gray-500">+{question.tags.length - 3} more</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
+            <FileText className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+            <p className="text-gray-500 text-sm mb-1">No questions linked to this indicator yet</p>
+            <p className="text-gray-400 text-xs mb-3">
+              Questions help evaluate and measure this indicator's performance
+            </p>
+            <Link to="/committee/questions-bank">
+              <Button variant="outline" size="sm">
+                Browse Questions Bank
+              </Button>
+            </Link>
+          </div>
+        )}
+      </Card>
+
       {/* Actions */}
       <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Actions</h2>
         <div className="flex flex-wrap gap-3">
-          <Button variant="outline" leftIcon={<Edit className="w-4 h-4" />}>
+          <Button variant="outline" leftIcon={<Edit className="w-4 h-4" />} onClick={handleEditIndicator}>
             Edit Indicator
           </Button>
-          <Button variant="outline" leftIcon={<Scale className="w-4 h-4" />}>
+          <Button variant="outline" leftIcon={<Scale className="w-4 h-4" />} onClick={handleAdjustWeight}>
             Adjust Weight
           </Button>
-          <Button variant="outline" leftIcon={<XCircle className="w-4 h-4" />} className="text-danger-600 border-danger-300">
+          <Button variant="outline" leftIcon={<XCircle className="w-4 h-4" />} className="text-danger-600 border-danger-300" onClick={handleDisableIndicator}>
             Disable Indicator
           </Button>
           <Button variant="primary" leftIcon={<FileDown className="w-4 h-4" />}>
@@ -273,6 +418,170 @@ const IndicatorReviewPage = () => {
           </Button>
         </div>
       </Card>
+
+      {/* Edit Indicator Modal */}
+      <Modal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        title="Edit Indicator"
+        size="md"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-600">
+            Update the indicator details below.
+          </p>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Indicator Name
+            </label>
+            <input
+              type="text"
+              value={editData.name}
+              onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="e.g., Teacher Qualifications"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Sub-Category
+            </label>
+            <input
+              type="text"
+              value={editData.sub_category}
+              onChange={(e) => setEditData({ ...editData, sub_category: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="e.g., Teaching Quality"
+            />
+          </div>
+
+          <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-900">
+              <strong>Note:</strong> Changes will be reflected in future evaluations.
+            </p>
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4">
+            <Button variant="outline" onClick={() => setShowEditModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={confirmEdit}>
+              Save Changes
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Adjust Weight Modal */}
+      <Modal
+        isOpen={showAdjustWeightModal}
+        onClose={() => setShowAdjustWeightModal(false)}
+        title="Adjust Indicator Weight"
+        size="md"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-600">
+            Adjust the weight assigned to this indicator in the evaluation scoring.
+          </p>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Current Weight: <span className="text-primary-600 font-bold">{indicator.weight}/5</span>
+            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              New Weight: <span className="text-primary-600 font-bold">{newWeight}/5</span>
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value={newWeight}
+              onChange={(e) => setNewWeight(parseInt(e.target.value))}
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>1 (Low)</span>
+              <span>3 (Medium)</span>
+              <span>5 (High)</span>
+            </div>
+          </div>
+
+          <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex gap-2">
+              <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium text-yellow-900 mb-1">Impact Warning</p>
+                <p className="text-sm text-yellow-800">
+                  Changing the weight will affect all school scores. This change will be applied to future evaluations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4">
+            <Button variant="outline" onClick={() => setShowAdjustWeightModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={confirmAdjustWeight}>
+              Confirm Weight Change
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Disable Indicator Modal */}
+      <Modal
+        isOpen={showDisableModal}
+        onClose={() => setShowDisableModal(false)}
+        title="Disable Indicator"
+        size="md"
+      >
+        <div className="space-y-4">
+          <div className="p-4 bg-danger-50 border border-danger-200 rounded-lg">
+            <div className="flex gap-3">
+              <AlertTriangle className="w-6 h-6 text-danger-600 flex-shrink-0" />
+              <div>
+                <p className="font-medium text-danger-900 mb-1">Warning: Disabling Indicator</p>
+                <p className="text-sm text-danger-800">
+                  This will remove the indicator from all future evaluations. Schools currently being evaluated will continue to use this indicator until their evaluation is complete.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Reason for Disabling <span className="text-danger-600">*</span>
+            </label>
+            <textarea
+              value={disableReason}
+              onChange={(e) => setDisableReason(e.target.value)}
+              rows={4}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              placeholder="Explain why this indicator is being disabled..."
+              required
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              This reason will be recorded in the change history for audit purposes.
+            </p>
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4">
+            <Button variant="outline" onClick={() => setShowDisableModal(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              onClick={confirmDisable}
+              disabled={!disableReason.trim()}
+            >
+              Confirm Disable
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

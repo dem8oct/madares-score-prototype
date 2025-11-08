@@ -1,7 +1,6 @@
 
 **8 Nov Madares Score Prototype notes**
-We've already implemented what's in this repo with the help of Claude Code(mostly).
-I've some changes and edits, and would like your assistance in reviewing the changes with me, confirm what you understood from these changes, tell me the impact of such changes. once we are aligned, we will make a plan to make the changes. Refernce 
+
 
 "General:
 1. Data: how to change some mock data e.g. users or schools. 
