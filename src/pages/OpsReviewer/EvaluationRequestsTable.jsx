@@ -60,6 +60,9 @@ const EvaluationRequestsTable = () => {
     gender_model: 'all',
     status: 'all',
     assignedReviewer: 'all',
+    createdFrom: '',
+    createdTo: '',
+    slaStatus: 'all', // all, on_track, at_risk, breached
   });
 
   // Calculate KPIs
@@ -108,6 +111,39 @@ const EvaluationRequestsTable = () => {
       if (filters.assignedReviewer !== 'all') {
         if (filters.assignedReviewer === 'unassigned' && evaluation.assigned_reviewer) return false;
         if (filters.assignedReviewer !== 'unassigned' && evaluation.assigned_reviewer !== filters.assignedReviewer) return false;
+      }
+
+      // Creation date range filter
+      if (filters.createdFrom || filters.createdTo) {
+        if (evaluation.created_at) {
+          const createdDate = new Date(evaluation.created_at);
+          if (filters.createdFrom) {
+            const fromDate = new Date(filters.createdFrom);
+            if (createdDate < fromDate) return false;
+          }
+          if (filters.createdTo) {
+            const toDate = new Date(filters.createdTo);
+            toDate.setHours(23, 59, 59, 999); // Include the entire "to" day
+            if (createdDate > toDate) return false;
+          }
+        }
+      }
+
+      // SLA status filter
+      if (filters.slaStatus !== 'all') {
+        // Skip completed statuses for SLA calculation
+        if (!['approved', 'published', 'closed'].includes(evaluation.status)) {
+          const deadline = new Date(evaluation.deadline);
+          const now = new Date();
+          const daysRemaining = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
+
+          if (filters.slaStatus === 'on_track' && daysRemaining <= 5) return false;
+          if (filters.slaStatus === 'at_risk' && (daysRemaining < 2 || daysRemaining > 5)) return false;
+          if (filters.slaStatus === 'breached' && daysRemaining >= 0) return false;
+        } else {
+          // Completed evaluations don't match any SLA filter
+          return false;
+        }
       }
 
       // Search query
@@ -161,6 +197,9 @@ const EvaluationRequestsTable = () => {
       gender_model: 'all',
       status: 'all',
       assignedReviewer: 'all',
+      createdFrom: '',
+      createdTo: '',
+      slaStatus: 'all',
     });
     setSearchQuery('');
   };
@@ -291,7 +330,7 @@ const EvaluationRequestsTable = () => {
 
       {/* Filters Panel */}
       <Card title="Filters" padding="default">
-        <div className="grid grid-cols-6 gap-4 mb-4">
+        <div className="grid grid-cols-3 gap-4 mb-4">
           {/* Region Filter */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Region</label>
@@ -384,6 +423,43 @@ const EvaluationRequestsTable = () => {
               <option value="unassigned">Unassigned</option>
               <option value="user003">Ahmed Al-Rashid</option>
               <option value="user004">Sarah Al-Qahtani</option>
+            </select>
+          </div>
+
+          {/* Created From Filter */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Created From</label>
+            <input
+              type="date"
+              value={filters.createdFrom}
+              onChange={(e) => handleFilterChange('createdFrom', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+            />
+          </div>
+
+          {/* Created To Filter */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Created To</label>
+            <input
+              type="date"
+              value={filters.createdTo}
+              onChange={(e) => handleFilterChange('createdTo', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+            />
+          </div>
+
+          {/* SLA Status Filter */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">SLA Status</label>
+            <select
+              value={filters.slaStatus}
+              onChange={(e) => handleFilterChange('slaStatus', e.target.value)}
+              className="w-full border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+            >
+              <option value="all">All SLA Statuses</option>
+              <option value="on_track">On Track (5+ days)</option>
+              <option value="at_risk">At Risk (2-5 days)</option>
+              <option value="breached">Breached (Overdue)</option>
             </select>
           </div>
         </div>

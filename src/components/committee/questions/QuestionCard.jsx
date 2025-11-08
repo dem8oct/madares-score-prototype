@@ -3,8 +3,14 @@ import Card from '../../common/Card';
 import Badge from '../../common/Badge';
 import Button from '../../common/Button';
 import { Clock, Tag, CheckCircle } from 'lucide-react';
+import { indicatorsWithStatus } from '../../../data/indicatorsWithStatus';
 
 const QuestionCard = ({ question, onViewHistory, onEdit }) => {
+  const getIndicatorName = (indicatorCode) => {
+    if (!indicatorCode) return 'Not linked to any indicator';
+    const indicator = indicatorsWithStatus.find(ind => ind.indicator_code === indicatorCode);
+    return indicator ? `${indicator.indicator_code} - ${indicator.indicator_name}` : indicatorCode;
+  };
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -82,8 +88,8 @@ const QuestionCard = ({ question, onViewHistory, onEdit }) => {
             </div>
             <div className="text-sm text-gray-600">
               Used in: <span className="font-semibold text-gray-900">
-                {question.usage_statistics.used_in_indicators}
-              </span> indicators
+                {getIndicatorName(question.indicator_code)}
+              </span>
             </div>
           </div>
           <div className="text-xs text-gray-500">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
+import { useToast } from '../../context/ToastContext';
 import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
 import Button from '../../components/common/Button';
@@ -16,8 +17,33 @@ import AddIndicatorModal from '../../components/committee/indicators/AddIndicato
 const CommitteeMemberDashboard = () => {
   const { language, t } = useLanguage();
   const navigate = useNavigate();
+  const { success } = useToast();
   const [activeTab, setActiveTab] = useState('indicators');
   const [showNewIndicatorModal, setShowNewIndicatorModal] = useState(false);
+  const [showConfigureDomainModal, setShowConfigureDomainModal] = useState(false);
+  const [selectedDomain, setSelectedDomain] = useState(null);
+  const [domainEditData, setDomainEditData] = useState({
+    name: '',
+    name_ar: '',
+    weight: 0,
+    description: ''
+  });
+
+  const handleConfigureDomain = (domain) => {
+    setSelectedDomain(domain);
+    setDomainEditData({
+      name: domain.name,
+      name_ar: domain.name_ar || '',
+      weight: Math.round(domain.weight * 100),
+      description: domain.description || ''
+    });
+    setShowConfigureDomainModal(true);
+  };
+
+  const confirmDomainEdit = () => {
+    success(`Domain "${domainEditData.name}" updated successfully`);
+    setShowConfigureDomainModal(false);
+  };
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -25,7 +51,7 @@ const CommitteeMemberDashboard = () => {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Committee Member Dashboard
+            Indicators Committee Member Dashboard
           </h1>
           <p className="text-gray-600">
             Manage evaluation indicators, weights, and scoring criteria
@@ -127,7 +153,7 @@ const CommitteeMemberDashboard = () => {
 
       {/* Tab Content */}
       {activeTab === 'indicators' && <IndicatorsTabEnhanced onOpenModal={() => setShowNewIndicatorModal(true)} />}
-      {activeTab === 'domains' && <DomainsTab />}
+      {activeTab === 'domains' && <DomainsTab onConfigureDomain={handleConfigureDomain} />}
       {activeTab === 'grades' && <GradeBandsTab />}
 
       {/* New Indicator Modal */}
@@ -135,6 +161,100 @@ const CommitteeMemberDashboard = () => {
         isOpen={showNewIndicatorModal}
         onClose={() => setShowNewIndicatorModal(false)}
       />
+
+      {/* Configure Domain Modal */}
+      <Modal
+        isOpen={showConfigureDomainModal}
+        onClose={() => setShowConfigureDomainModal(false)}
+        title="Configure Domain"
+        size="md"
+      >
+        {selectedDomain && (
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600">
+              Edit domain properties and settings.
+            </p>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Domain Name (English)
+              </label>
+              <input
+                type="text"
+                value={domainEditData.name}
+                onChange={(e) => setDomainEditData({ ...domainEditData, name: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                placeholder="e.g., Compliance"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Domain Name (Arabic)
+              </label>
+              <input
+                type="text"
+                value={domainEditData.name_ar}
+                onChange={(e) => setDomainEditData({ ...domainEditData, name_ar: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                placeholder="e.g., الامتثال"
+                dir="rtl"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Domain Weight: <span className="text-primary-600 font-bold">{domainEditData.weight}%</span>
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={domainEditData.weight}
+                onChange={(e) => setDomainEditData({ ...domainEditData, weight: parseInt(e.target.value) })}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Adjust the weight this domain contributes to the overall score
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Description
+              </label>
+              <textarea
+                value={domainEditData.description}
+                onChange={(e) => setDomainEditData({ ...domainEditData, description: e.target.value })}
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                placeholder="Brief description of this domain..."
+              />
+            </div>
+
+            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-sm text-blue-900">
+                <strong>Note:</strong> Changes to domain configuration will affect how evaluations are calculated.
+              </p>
+            </div>
+
+            <div className="flex justify-end gap-3 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowConfigureDomainModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={confirmDomainEdit}
+              >
+                Save Changes
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
@@ -180,7 +300,7 @@ const IndicatorsTab = ({ onOpenModal }) => {
 };
 
 // Domains Tab
-const DomainsTab = () => {
+const DomainsTab = ({ onConfigureDomain }) => {
   return (
     <div className="grid gap-4">
       {mockDomains.map((domain, idx) => (
@@ -206,7 +326,7 @@ const DomainsTab = () => {
                 </div>
               </div>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => onConfigureDomain(domain)}>
               Configure
             </Button>
           </div>
