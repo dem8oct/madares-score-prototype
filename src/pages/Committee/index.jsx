@@ -221,7 +221,7 @@ const CommitteeDashboard = () => {
       <div className="space-y-6">
         {/* Page Header */}
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Indicators Committee Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Standards Committee Dashboard</h1>
           <p className="text-gray-600 mt-1">Manage evaluation indicators and domain weights</p>
         </div>
 

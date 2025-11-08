@@ -51,7 +51,7 @@ const CommitteeMemberDashboard = () => {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Indicators Committee Member Dashboard
+            Standards Committee Member Dashboard
           </h1>
           <p className="text-gray-600">
             Manage evaluation indicators, weights, and scoring criteria

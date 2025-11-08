@@ -5,6 +5,7 @@ import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import { LogIn, User } from 'lucide-react';
 import { mockUsers } from '../data/mockData';
+import { getFirstName } from '../utils/nameUtils';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -100,7 +101,9 @@ const Login = () => {
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <p className="font-medium text-gray-900">{user.name}</p>
+                    <p className="font-medium text-gray-900" title={user.name}>
+                      {getFirstName(user.name)}
+                    </p>
                     <p className="text-xs text-gray-500 mt-1">
                       Username: <span className="font-mono text-primary-600">{user.username}</span>
                     </p>
