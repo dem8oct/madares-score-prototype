@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ExternalLink, UserPlus, History, Download, MessageSquare } from 'lucide-react';
+import { ExternalLink, UserPlus, History, Download, MessageSquare, UserCog } from 'lucide-react';
 
 const ActionDropdownMenu = ({ evaluation, onAction }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +31,12 @@ const ActionDropdownMenu = ({ evaluation, onAction }) => {
       icon: ExternalLink,
       primary: true,
       action: () => handleAction('open_review'),
+    },
+    {
+      id: 'assign_inspector',
+      label: 'Assign Inspector',
+      icon: UserCog,
+      action: () => handleAction('assign_inspector'),
     },
     {
       id: 'assign_to_me',

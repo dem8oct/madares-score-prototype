@@ -9,6 +9,9 @@ import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 import ActionDropdownMenu from '../../components/ops/ActionDropdownMenu';
 import CreateRequestModal from '../../components/ops/CreateRequestModal';
+import AssignInspectorModal from '../../components/ops/AssignInspectorModal';
+import { autoAssignInspectorsToSchools, getAssignmentSummary } from '../../utils/inspectorAssignment';
+import users from '../../data/users.json';
 import {
   Search, Download, FileText, Clock, AlertCircle, TrendingUp,
   ChevronLeft, ChevronRight, Plus, MoreVertical, X
@@ -51,6 +54,8 @@ const EvaluationRequestsTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isAssignInspectorModalOpen, setIsAssignInspectorModalOpen] = useState(false);
+  const [selectedEvaluationForAssignment, setSelectedEvaluationForAssignment] = useState(null);
 
   // Filters
   const [filters, setFilters] = useState({
@@ -227,6 +232,10 @@ const EvaluationRequestsTable = () => {
       case 'open_review':
         navigate(`/ops/evaluation/${evaluation.id}`);
         break;
+      case 'assign_inspector':
+        setSelectedEvaluationForAssignment(evaluation);
+        setIsAssignInspectorModalOpen(true);
+        break;
       case 'assign_to_me':
         success(`Assigned ${evaluation.school_name} to ${currentUser.name}`);
         // In real app: update evaluation.assigned_reviewer
@@ -248,9 +257,39 @@ const EvaluationRequestsTable = () => {
     }
   };
 
-  const handleCreateRequests = (schools, deadline) => {
-    success(`Creating ${schools.length} evaluation request(s) with deadline ${deadline} (Demo)`);
-    // In real app: POST to API to create evaluation requests
+  const handleAssignInspector = (assignmentData) => {
+    const { evaluationId, inspectorName, indicators } = assignmentData;
+    success(
+      `Inspector "${inspectorName}" assigned to ${selectedEvaluationForAssignment?.school_name} for ${indicators.length} indicator(s)`
+    );
+
+    // In real app: PUT/PATCH to API
+    // PUT /api/evaluations/${evaluationId}/assign-inspector
+    // Body: { inspector_id, indicators }
+
+    // Then refresh evaluations list
+  };
+
+  const handleCreateRequests = (schools, deadline, indicators) => {
+    // Auto-assign inspectors to schools
+    const assignments = autoAssignInspectorsToSchools(schools, indicators, evaluations);
+    const assignmentSummary = getAssignmentSummary(assignments);
+
+    // Build summary message
+    let summaryMsg = `Created ${schools.length} evaluation request(s) with deadline ${deadline}.\n\n`;
+    summaryMsg += `Auto-assigned inspectors:\n`;
+    assignmentSummary.forEach(({ inspector, count }) => {
+      summaryMsg += `• ${inspector.name} (${inspector.region}): ${count} school(s)\n`;
+    });
+
+    success(summaryMsg);
+
+    // In real app: POST to API with assignments
+    // schools.forEach((school, index) => {
+    //   const assignedInspectorId = assignments[school.school_id];
+    //   // POST { school_id, indicators, deadline, assigned_inspector: assignedInspectorId }
+    // });
+
     // Then refresh evaluations list
   };
 
@@ -678,6 +717,14 @@ const EvaluationRequestsTable = () => {
         schools={mockSchools}
         evaluations={evaluations}
         onCreateRequests={handleCreateRequests}
+      />
+
+      {/* Assign Inspector Modal */}
+      <AssignInspectorModal
+        isOpen={isAssignInspectorModalOpen}
+        onClose={() => setIsAssignInspectorModalOpen(false)}
+        evaluation={selectedEvaluationForAssignment}
+        onAssign={handleAssignInspector}
       />
     </div>
   );
